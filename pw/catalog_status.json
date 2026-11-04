@@ -1,0 +1,1257 @@
+{
+ "trovaprezzi": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 20,
+  "pertinenti": 20,
+  "esempio": "Samsung 990 PRO MZ-V9P1T0BW - SSD - crittografato - 1 TB - interno - M.2 2280 - PCIe 4.0 x",
+  "prezzo": 201.47,
+  "data": "2026-11-02"
+ },
+ "idealo_it": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 36,
+  "pertinenti": 36,
+  "esempio": "Samsung 990 Pro",
+  "prezzo": 219.36,
+  "data": "2026-11-02"
+ },
+ "amazon_it": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 60,
+  "pertinenti": 59,
+  "esempio": "Annuncio sponsorizzato – Samsung PM9B1 SSD 128GB M.2 PCI Express 4.0 NVMe 2230 MZ9L4128HCH",
+  "prezzo": 39.0,
+  "data": "2026-11-02"
+ },
+ "ebay_it": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "eprice": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "unieuro": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 11,
+  "pertinenti": 11,
+  "esempio": "Samsung Portable SSD T7 1 TB USB tipo-C 3.2 Gen 2 ...",
+  "prezzo": 169.99,
+  "data": "2026-11-02"
+ },
+ "mediaworld": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 25,
+  "pertinenti": 24,
+  "esempio": "SSD INTERNO SAMSUNG MZ-77E500B/EU 870 EVO 500 GB 500 GB, 560 Mbyte/s, USB 1.1",
+  "prezzo": 178.97,
+  "data": "2026-11-02"
+ },
+ "euronics_it": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "akinformatica": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 410",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "pccomponentes_it": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 40,
+  "pertinenti": 40,
+  "esempio": "Samsung Portable SSD T5 EVO USB 3.2 2TB",
+  "prezzo": 302.99,
+  "data": "2026-11-02"
+ },
+ "geizhals": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 30,
+  "pertinenti": 6,
+  "esempio": "Samsung OEM Client SSD PM9C1b, M.2",
+  "prezzo": 49.9,
+  "data": "2026-11-02"
+ },
+ "idealo_de": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 36,
+  "pertinenti": 36,
+  "esempio": "Samsung 990 Pro",
+  "prezzo": 216.6,
+  "data": "2026-11-02"
+ },
+ "amazon_de": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 18,
+  "pertinenti": 18,
+  "esempio": "Samsung Portable SSD T9, 1 TB, 2.000 MB/s Lesen, 2.000 MB/s Schreiben, USB 3.2 Gen.2x2, Ex",
+  "prezzo": 192.83,
+  "data": "2026-11-02"
+ },
+ "ebay_de": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "alternate_de": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 24,
+  "pertinenti": 24,
+  "esempio": "Samsung 9100 PRO 2 TB, SSD",
+  "prezzo": 513.0,
+  "data": "2026-11-02"
+ },
+ "mindfactory": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "caseking": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 33,
+  "pertinenti": 1,
+  "esempio": "MSI SPATIUM M470 PRO SSD, PCIe 4.0 M.2 Typ 2280 - 1 TB",
+  "prezzo": 199.9,
+  "data": "2026-11-02"
+ },
+ "cyberport": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 15,
+  "pertinenti": 4,
+  "esempio": "Apple MacBook Air 13\" 2026 M5/24/512GB SSD 10C GPU Mitternacht BTO",
+  "prezzo": 1517.25,
+  "data": "2026-11-02"
+ },
+ "galaxus_de": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "idealo_fr": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 36,
+  "pertinenti": 36,
+  "esempio": "Samsung 990 Pro",
+  "prezzo": 215.99,
+  "data": "2026-11-02"
+ },
+ "amazon_fr": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "ebay_fr": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "ldlc_fr": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 43,
+  "pertinenti": 43,
+  "esempio": "Samsung SSD 990 PRO M.2 PCIe NVMe 1 To",
+  "prezzo": 269.95,
+  "data": "2026-11-02"
+ },
+ "materiel": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 45,
+  "pertinenti": 45,
+  "esempio": "Samsung 990 - 1To",
+  "prezzo": 209.95,
+  "data": "2026-11-02"
+ },
+ "topachat": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "rueducommerce": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 48,
+  "pertinenti": 48,
+  "esempio": "Samsung SSD 9100 PRO M.2 PCIe NVMe 2 To SSD 2 To M.2 2280 NVMe 2.0 - PCIe 5.0 x4",
+  "prezzo": 430.22,
+  "data": "2026-11-02"
+ },
+ "cdiscount": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 200",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "idealo_es": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 36,
+  "pertinenti": 36,
+  "esempio": "Samsung 990 Pro",
+  "prezzo": 218.95,
+  "data": "2026-11-02"
+ },
+ "amazon_es": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 42,
+  "pertinenti": 42,
+  "esempio": "SAMSUNG T7 Shield SSD portátil 1TB, USB 3.2 Gen.2 SSD Externo Negro (MU-PE1T0S/EU)",
+  "prezzo": 224.99,
+  "data": "2026-11-02"
+ },
+ "ebay_es": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "pccomponentes_es": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 41,
+  "pertinenti": 40,
+  "esempio": "Samsung 990 PRO 4TB SSD PCIe 4.0 NVMe M.2 con Disipador Térmico",
+  "prezzo": 799.89,
+  "data": "2026-11-02"
+ },
+ "coolmod": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 23,
+  "pertinenti": 15,
+  "esempio": "COOLPC - Recíbelo mañana COOLPC Black 24Hr - Ryzen 5 5500 / GeForce RTX 3050 6GB / 16GB / ",
+  "prezzo": 999.96,
+  "data": "2026-11-02"
+ },
+ "kuantokusta": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 48,
+  "pertinenti": 48,
+  "esempio": "SSD Samsung 2TB 990 Pro M.2 PCIe 4.0 NVMe - MZ-V9P2T0BW",
+  "prezzo": 344.41,
+  "data": "2026-11-02"
+ },
+ "globaldata": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "amazon_nl": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 55,
+  "pertinenti": 54,
+  "esempio": "Gesponsorde advertentie - Philips interne SSD 2.5\"SATA III 500 GB S130 Ultra Speed, leessn",
+  "prezzo": 99.99,
+  "data": "2026-11-02"
+ },
+ "tweakers": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "coolblue_nl": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 7,
+  "pertinenti": 7,
+  "esempio": "Samsung 990 Evo Plus 2TB NVMe SSD",
+  "prezzo": 441.0,
+  "data": "2026-11-02"
+ },
+ "bol": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "megekko": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "idealo_uk": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 36,
+  "pertinenti": 36,
+  "esempio": "Samsung 990 Pro",
+  "prezzo": 201.99,
+  "data": "2026-11-02"
+ },
+ "pricespy_uk": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 47,
+  "pertinenti": 47,
+  "esempio": "Samsung T7 Portable SSD 500GB",
+  "prezzo": 219.99,
+  "data": "2026-11-02"
+ },
+ "amazon_gb": {
+  "esito": "errore",
+  "dettaglio": "HTTP 202",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "ebay_gb": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "scan": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 121,
+  "pertinenti": 118,
+  "esempio": "1TB Samsung 990 SSD, M.2 (2280), PCIe 4.0 (x4) NVMe, 7150MB/s Read, 6450MB/s Write, 1100k ",
+  "prezzo": 175.0,
+  "data": "2026-11-02"
+ },
+ "overclockers_uk": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 11,
+  "pertinenti": 11,
+  "esempio": "Samsung 990 Pro 2TB M.2 2280 PCI-e 4.0 x4 NVMe 1.3c Solid State Drive",
+  "prezzo": 399.95,
+  "data": "2026-11-02"
+ },
+ "ebuyer": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 39,
+  "pertinenti": 34,
+  "esempio": "Samsung 990 EVO Plus 2TB M.2 2280 NVMe Internal SSD PCIe 4.0/5.0 Up to 7250MB/s Read 6300M",
+  "prezzo": 299.99,
+  "data": "2026-11-02"
+ },
+ "currys": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 20,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "argos": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "toppreise": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 47,
+  "pertinenti": 47,
+  "esempio": "SAMSUNG SSD 870 QVO, 4 TB (MZ-77Q4T0BW)",
+  "prezzo": 326.55,
+  "data": "2026-11-02"
+ },
+ "galaxus_ch": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "digitec": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "prisjakt_se": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 28,
+  "pertinenti": 28,
+  "esempio": "Samsung T7 Portable SSD 500GB",
+  "prezzo": 3658.0,
+  "data": "2026-11-02"
+ },
+ "amazon_se": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 56,
+  "pertinenti": 54,
+  "esempio": "Sponsrad annons – PCI Express 3.0 4x 8x 16x till M.2 NVMe och AHCI SSD-adapterkort med kyl",
+  "prezzo": 150.0,
+  "data": "2026-11-02"
+ },
+ "inet": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 31,
+  "pertinenti": 28,
+  "esempio": "Produktsida för Samsung 990 PRO M.2 NVMe SSD 1TB",
+  "prezzo": 3290.0,
+  "data": "2026-11-02"
+ },
+ "webhallen": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 20,
+  "pertinenti": 18,
+  "esempio": "Samsung 990 / PCIe 4.0 / NVMe / M.2 / 1TB",
+  "prezzo": 2590.0,
+  "data": "2026-11-02"
+ },
+ "prisjakt_no": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 54,
+  "pertinenti": 54,
+  "esempio": "Samsung P7 Portable SSD USB4 1TB",
+  "prezzo": 2909.0,
+  "data": "2026-11-02"
+ },
+ "komplett_no": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "pricerunner_dk": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 20,
+  "pertinenti": 20,
+  "esempio": "Samsung T7 Portable SSD 2TB USB 3.2 Gen 2",
+  "prezzo": 736.0,
+  "data": "2026-11-02"
+ },
+ "ceneo": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 2,
+  "pertinenti": 2,
+  "esempio": "Dodaj opinie o Samsung ssd9100PRO Heatsink NVMe MZ-VAP1T0CW (MZVAP1T0CW)",
+  "prezzo": 13300.0,
+  "data": "2026-11-02"
+ },
+ "amazon_pl": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 55,
+  "pertinenti": 55,
+  "esempio": "Reklama sponsorowana — Dysk SSD 256 GB M.2 2242 PCIe Gen3 x2 NVMe Solid State Drive (SSD) ",
+  "prezzo": 404.09,
+  "data": "2026-11-02"
+ },
+ "xkom": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "morele": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 30,
+  "pertinenti": 30,
+  "esempio": "Dysk SSD Samsung 870 EVO 500GB 2.5\" SATA III (MZ-77E500B/EU)",
+  "prezzo": 852.99,
+  "data": "2026-11-02"
+ },
+ "alza": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "heureka": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "amazon_us": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 503",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "ebay_us": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "newegg": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "microcenter": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "bhphoto": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 17,
+  "pertinenti": 17,
+  "esempio": "Samsung 2TB T7 Portable SSD (Titan Gray)",
+  "prezzo": 441.24,
+  "data": "2026-11-02"
+ },
+ "bestbuy": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "walmart": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 200",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "target": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "slickdeals": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "amazon_ca": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 503",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "ebay_ca": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "newegg_ca": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "canadacomputers": {
+  "esito": "errore",
+  "dettaglio": "Timeout: Failed to perform, curl: (28) Failed to connect to www.canadacomputers.com:443 after 21111 ms: Could not connec",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "memoryexpress": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "amazon_br": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 59,
+  "pertinenti": 59,
+  "esempio": "Anúncio patrocinado – SSD MSI Spatium S270-240GB, SATA lll, 2,5''",
+  "prezzo": 278.07,
+  "data": "2026-11-02"
+ },
+ "mercadolivre": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "kabum": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "amazon_mx": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 60,
+  "pertinenti": 54,
+  "esempio": "Anuncio patrocinado: fanxiang Disco Duro SSD 1TB SATA III 6Gb/s 2.5 Puerto, Velocidad de L",
+  "prezzo": 2598.07,
+  "data": "2026-11-02"
+ },
+ "mercadolibre_mx": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "amazon_au": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 3,
+  "pertinenti": 3,
+  "esempio": "1TB Samsung 9100 PRO M.2 NVMe PCIe 5.0 SSD",
+  "prezzo": 373.73,
+  "data": "2026-11-02"
+ },
+ "ebay_au": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "staticice": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 19,
+  "pertinenti": 19,
+  "esempio": "Videoguys: Click to see the latest price for SmallRig 2245B Samsung T5 SSD Mount...",
+  "prezzo": 28.9,
+  "data": "2026-11-02"
+ },
+ "scorptec": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "pccasegear": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "pricespy_nz": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 40,
+  "pertinenti": 40,
+  "esempio": "Samsung T5 Portable SSD 500GB",
+  "prezzo": 182.29,
+  "data": "2026-11-02"
+ },
+ "pbtech": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 20,
+  "pertinenti": 20,
+  "esempio": "Samsung T7 1TB Portable External SSD - Titan Grey - USB 3.2 Gen2 (10Gbps) - Read up to 105",
+  "prezzo": 425.0,
+  "data": "2026-11-02"
+ },
+ "amazon_jp": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "kakaku": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 50,
+  "pertinenti": 10,
+  "esempio": "Samsung｜サムスン PCIe 4.0 x4 NVMe M.2 SSD 990 EVO Plus 1TB 国内正規保証品 MZ-V9S1T0B-IT",
+  "prezzo": 44424.0,
+  "data": "2026-11-02"
+ },
+ "amazon_in": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 25,
+  "pertinenti": 25,
+  "esempio": "SSD 990 1TB, PCIe 4.0 NVMe M.2, Read/Write Speeds Up to 7,150/6,450 MB/s | Internal SSD fo",
+  "prezzo": 21999.0,
+  "data": "2026-11-02"
+ },
+ "flipkart": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 42,
+  "pertinenti": 41,
+  "esempio": "Samsung T7 / 1050 Mbs / PC,Mac,Android / Portable,Type C Enabled / 3Y Warranty / USB 3.2 1",
+  "prezzo": 20999.0,
+  "data": "2026-11-02"
+ },
+ "mdcomputers": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 16,
+  "pertinenti": 16,
+  "esempio": "Samsung 870 EVO 500GB SSD",
+  "prezzo": 39999.0,
+  "data": "2026-11-02"
+ },
+ "amazon_sg": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "amazon_tr": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 60,
+  "pertinenti": 58,
+  "esempio": "Samsung 990 PRO MZ-V9P1T0BW 1TB 7450/6900MB/s PCIe NVMe M.2 SSD Disk",
+  "prezzo": 13299.0,
+  "data": "2026-11-02"
+ },
+ "amazon_za": {
+  "esito": "errore",
+  "dettaglio": "HTTP 202",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "aliexpress": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 12,
+  "pertinenti": 12,
+  "esempio": "SSD SAMSUNG M2 NVMe 500GB 990 PRO 250GB Unità a Stato Solido Interna 980 1TB HDD Disco Rig",
+  "prezzo": 72.39,
+  "data": "2026-11-02"
+ },
+ "temu": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 200",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "banggood": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 2,
+  "pertinenti": 2,
+  "esempio": "MC-S017 6A USB-A to Type-C Braided Extension Cable Fast Charging Data Transmission Copper ",
+  "prezzo": 2.12,
+  "data": "2026-11-02"
+ },
+ "dhgate": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "geekbuying": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "tomtop": {
+  "esito": "errore",
+  "dettaglio": "Timeout: Failed to perform, curl: (28) Failed to connect to www.tomtop.com:443 after 21299 ms: Could not connect to serv",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "joom": {
+  "esito": "ok",
+  "dettaglio": "selettori",
+  "letti": 24,
+  "pertinenti": 19,
+  "esempio": "ZhiTai Ti600 NVMe PCIe 4.0 M.2 SSD",
+  "prezzo": 169.42,
+  "data": "2026-11-02"
+ },
+ "jd": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 200",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "taobao": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "tmall": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "smzdm": {
+  "esito": "errore",
+  "dettaglio": "HTTP 202",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "zol": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 200",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "pricehk": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "danawa": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 38,
+  "pertinenti": 7,
+  "esempio": "삼성 990 EVO Plus 4TB, 게이밍에 최적화된 내장 NVMe SSD 추천!",
+  "prezzo": 282.0,
+  "data": "2026-11-02"
+ },
+ "gmarket": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "coupang": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "rakuten_jp": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 60,
+  "pertinenti": 60,
+  "esempio": "R176-SAMSUNG 256GB PCIe NVMe SSD 1点 サムセン PM981/PM981a 型番:MZ-VLB2560/MZ-VLB256B 増設SSD ノートパソ",
+  "prezzo": 4600.0,
+  "data": "2026-11-02"
+ },
+ "yodobashi": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "shopee_sg": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 200",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "lazada_sg": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 200",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "lazada_my": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 200",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "lazada_th": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 200",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "jib": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 18,
+  "pertinenti": 18,
+  "esempio": "1 TB SSD (เอสเอสดี) SAMSUNG 990 PRO - PCIe 4x4/NVMe M.2 2280 (MZ-V9P1T0BW)",
+  "prezzo": 8590.0,
+  "data": "2026-11-02"
+ },
+ "lazada_ph": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 200",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "tokopedia": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "zap": {
+  "esito": "errore",
+  "dettaglio": "TooManyRedirects: Failed to perform, curl: (47) Maximum (30) redirects followed. See https://curl.se/libcurl/c/libcurl-e",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "skroutz": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 83,
+  "pertinenti": 83,
+  "esempio": "Samsung PM1743 U.3 SSD 3.8TB τύπου 2.5'' με σύνδεση PCI Express 5.0 MZWLO3T8HCLS-00A07 Bul",
+  "prezzo": 2525.25,
+  "data": "2026-11-02"
+ },
+ "emag_ro": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 57,
+  "pertinenti": 57,
+  "esempio": "Solid State Drive (SSD) Samsung 990 PRO 1TB, PCIe Gen 4.0 x4, NVMe, M.2",
+  "prezzo": 47.8,
+  "data": "2026-11-02"
+ },
+ "emag_hu": {
+  "esito": "errore",
+  "dettaglio": "HTTP 511",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "arukereso": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "pcpartpicker": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "yeppon": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 17,
+  "pertinenti": 16,
+  "esempio": "Samsung MZ-V9P4T0BW 990 PRO SSD Interno NVMe M.2 4TB PCIe 4.0 x4 Lettura 7450 MB-s Scrittu",
+  "prezzo": 851.99,
+  "data": "2026-11-02"
+ },
+ "bpm": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 26,
+  "pertinenti": 26,
+  "esempio": "Notebook 14'' Samsung Galaxy Book6 Pro Intel Core Ultra 7-356H 32GB 512GB SSD Win11Pro Gri",
+  "prezzo": 1671.71,
+  "data": "2026-11-02"
+ },
+ "expert_it": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 10,
+  "pertinenti": 4,
+  "esempio": "SSD PORTATILE 1TB 2.5\" USB-C 3.2",
+  "prezzo": 169.9,
+  "data": "2026-11-02"
+ },
+ "comet": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-02"
+ },
+ "conrad_it": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 180,
+  "pertinenti": 179,
+  "esempio": "Samsung PM893 2.5\" 1920 GB Serial ATA III V-NAND TLC",
+  "prezzo": 1687.76,
+  "data": "2026-11-02"
+ },
+ "nexths": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "mediamarkt_de": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 24,
+  "pertinenti": 24,
+  "esempio": "SAMSUNG 850 PRO, 256 GB, SSD, intern",
+  "prezzo": 55.0,
+  "data": "2026-11-02"
+ },
+ "saturn": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 24,
+  "pertinenti": 24,
+  "esempio": "SAMSUNG 870 EVO, 8 TB, SSD, 2,5 Zoll, intern",
+  "prezzo": 3130.55,
+  "data": "2026-11-02"
+ },
+ "conrad_de": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 180,
+  "pertinenti": 180,
+  "esempio": "Samsung 1 TB Externe SSD USB-C® (USB 3.2 Gen 2) Schwarz MU-PF1T0G/WW",
+  "prezzo": 264.71,
+  "data": "2026-11-02"
+ },
+ "kaufland_de": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "mediamarkt_at": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 24,
+  "pertinenti": 24,
+  "esempio": "SAMSUNG MZ-V9P1T0GW 990 PRO HEATSINK 1TB, 1 TB, SSD, intern",
+  "prezzo": 275.31,
+  "data": "2026-11-02"
+ },
+ "boulanger": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 35,
+  "pertinenti": 18,
+  "esempio": "Utilisation(s) : dans un ordinateur de bureau, dans un ordinateur portable Capacité de sto",
+  "prezzo": 69.99,
+  "data": "2026-11-02"
+ },
+ "carrefour_fr": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 429",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "fnac": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "darty": {
+  "esito": "bloccato",
+  "dettaglio": "HTTP 403",
+  "letti": 0,
+  "pertinenti": 0,
+  "data": "2026-11-02"
+ },
+ "mediamarkt_es": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 24,
+  "pertinenti": 24,
+  "esempio": "Disco duro SSD interno 1 TB - SAMSUNG 870 EVO 1TB, HASTA 560 MB/S, SATA, Interno, 10",
+  "prezzo": 320.0,
+  "data": "2026-11-02"
+ },
+ "worten_pt": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 46,
+  "pertinenti": 46,
+  "esempio": "Disco SSD Interno SAMSUNG 980 (M.2 - 1 TB - PCI Express 3.0 - 3500 MB/s)",
+  "prezzo": 251.93,
+  "data": "2026-11-02"
+ },
+ "mediamarkt_nl": {
+  "esito": "ok",
+  "dettaglio": "json-ld+euristica",
+  "letti": 24,
+  "pertinenti": 24,
+  "esempio": "SAMSUNG Samsung - 9100 PRO SSD - 2TB - 14700 Mbit/s - PCIe 5.0 NVMe M.2",
+  "prezzo": 415.0,
+  "data": "2026-11-02"
+ },
+ "johnlewis": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 53,
+  "pertinenti": 7,
+  "esempio": "Samsung QE55S95H (2026) OLED HDR 4K Ultra HD Smart AI TV, 55 inch with Dolby Atmos & Infin",
+  "prezzo": 236.0,
+  "data": "2026-11-02"
+ },
+ "very": {
+  "esito": "ok",
+  "dettaglio": "euristica",
+  "letti": 28,
+  "pertinenti": 28,
+  "esempio": "Samsung 9100 Pro 2TB M.2 Internal SSD",
+  "prezzo": 438.59,
+  "data": "2026-11-02"
+ },
+ "juhor": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-04"
+ },
+ "biwin": {
+  "esito": "vuoto",
+  "dettaglio": "euristica",
+  "letti": 0,
+  "pertinenti": 0,
+  "esempio": "",
+  "prezzo": null,
+  "data": "2026-11-04"
+ }
+}
