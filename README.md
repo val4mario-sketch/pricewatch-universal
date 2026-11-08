@@ -1,153 +1,153 @@
-# PriceWatch Universale
+# PriceWatch Universal
 
-Tiene d'occhio i prezzi dei prodotti che scegli, su siti e canali Telegram che scegli, e ti avvisa. Se non trova il modello
-esatto, propone quello simile o superiore e lo segnala. Gira sul tuo computer: non servono account né server.
+Keeps an eye on the prices of the products you choose, on the sites and Telegram channels you choose, and alerts you. If it cannot
+find the exact model, it suggests a similar or better one and says so. It runs on your computer: no accounts or servers needed.
 
-Serve Python 3.10 o più recente.
+Requires Python 3.10 or later.
 
-- **Windows:** doppio clic su `Avvia PriceWatch.bat`
-- **macOS e Linux:** `sh avvia.sh`
+- **Windows:** double-click `Avvia PriceWatch.bat`
+- **macOS and Linux:** `sh avvia.sh`
 
-La prima volta installa da solo le librerie. Poi si apre la pagina nel browser, con quattro sezioni.
+The first time, it installs the libraries by itself. Then a page opens in your browser, with four sections.
 
-| Sezione | Cosa fai |
+| Section | What you do |
 |---|---|
-| Prodotti | Con **+** aggiungi un prodotto; nella sua finestra imposti specifiche, margini, prezzi e modelli alternativi |
-| Siti e canali | Attivi o togli siti, ne aggiungi di tuoi, aggiungi canali Telegram pubblici, provi se funzionano |
-| Esecuzione | Scegli ogni quante ore far girare il controllo, lo attivi, fai un giro subito |
-| Risultati | Vedi tutte le offerte, dalla più bassa; in cima a ogni prodotto c'è la più affidabile |
+| Products | Add a product with **+**; in its window you set specifications, margins, prices and alternative models |
+| Sites & channels | Turn sites on or off, add your own, add public Telegram channels, test whether they work |
+| Schedule | Choose how many hours between checks, turn it on, run a check right away |
+| Results | See all the offers, from the lowest; the most reliable one is at the top of each product |
 
-In **Impostazioni** scegli Paese e valuta e colleghi il bot Telegram. L'app parte in inglese: la lingua (English o Italiano) si
-cambia dal menu in basso a sinistra, e vale anche per report e messaggi Telegram.
+In **Settings** you choose your country and currency and connect the Telegram bot. The app starts in English: the language (English or
+Italiano) can be changed from the menu at the bottom left, and it also applies to reports and Telegram messages.
 
-## Dal telefono
+## From your phone
 
-L'app e la sua pagina girano solo sul computer, e non si aprono dal telefono. Sul telefono arrivano i risultati, tramite Telegram:
+The app and its page run only on the computer and cannot be opened from a phone. Your phone receives the results through Telegram:
 
-1. Sul computer, in **Impostazioni**, collega il bot seguendo i tre passi indicati e premi **Invia una prova**.
-2. In **Esecuzione** attiva l'avvio automatico.
-3. A ogni giro ricevi su Telegram l'offerta più affidabile di ogni prodotto con il link, il prezzo più basso se è un altro, gli
-   avvisi di prezzo e il file `report.html`. Apri il file da Telegram per vedere l'elenco completo.
+1. On the computer, in **Settings**, connect the bot by following the three steps shown and press **Send a test**.
+2. In **Schedule**, turn on automatic runs.
+3. At each run you receive on Telegram the most reliable offer for each product with its link, the lowest price if that is a different
+   offer, price alerts and the `report.html` file. Open the file from Telegram to see the full list.
 
-Il computer deve essere acceso all'ora del giro. Dal telefono non si aggiungono prodotti né si cambiano le impostazioni.
+The computer must be on at the time of the run. You cannot add products or change settings from the phone.
 
-## Come giudica un'offerta
+## How it judges an offer
 
-| Esito | Quando |
+| Result | When |
 |---|---|
-| Esatto | Nel titolo ci sono tutte le parole del nome e le specifiche sono rispettate |
-| Superiore | Una specifica è migliore della richiesta, o il modello è tra le alternative "superiori" |
-| Simile | Una specifica è dentro il margine, il modello è tra le alternative "simili", o manca una sola parola del nome (nomi di almeno 3 parole, mai la prima né un numero di modello) |
-| Scartata | Specifica oltre il margine, prezzo fuori dai limiti, usato, ricondizionato o accessorio |
+| Exact | The title contains all the words in the name and the specifications are met |
+| Better | A specification is better than requested, or the model is among the "better" alternatives |
+| Similar | A specification is within the margin, the model is among the "similar" alternatives, or a single word of the name is missing (names of at least 3 words, never the first word or a model number) |
+| Discarded | Specification beyond the margin, price outside the limits, used, refurbished or an accessory |
 
-I valori scritti nel nome contano come specifiche: con "32 GB ram ddr5 6000 CL30" il prodotto è la DDR5, con almeno 32 GB (anche se
-scritti 2x16GB), almeno 6000 MHz (anche 6000 MT/s) e al massimo CL30. CL28 o 6400 MHz risultano superiori. Parole generiche come
-"ram", "memoria" o "kit" non servono a riconoscerlo. Con le DDR si scartano anche SO-DIMM, ECC e schede madri.
+Values written in the name count as specifications: with "32 GB ram ddr5 6000 CL30" the product is DDR5, with at least 32 GB (even if
+written 2x16GB), at least 6000 MHz (also 6000 MT/s) and at most CL30. CL28 or 6400 MHz count as better. Generic words such as "ram",
+"memory" or "kit" are not used to recognize it. For DDR memory, SO-DIMM, ECC and motherboards are also discarded.
 
-I prezzi sotto il 15% della mediana delle offerte di quel prodotto sono numeri letti male e non compaiono. Quelli sotto il 60% del
-quartile basso restano visibili con l'avviso di prezzo anomalo. Se un'offerta mostra più numeri, quelli sotto un quarto del più alto
-(prezzo al GB, rate) non contano come prezzo.
+Prices below 15% of the median of a product's offers are misread numbers and do not appear. Those below 60% of the lower quartile stay
+visible with an unusual-price warning. If an offer shows several numbers, those below a quarter of the highest (price per GB,
+instalments) do not count as the price.
 
-Una specifica che il titolo non indica non scarta l'offerta: resta un avviso da verificare. Usato, ricondizionato, accessori e
-computer interi sono riconosciuti in molte lingue, anche cinese, giapponese e coreano. Un elenco di parole non è perfetto: se passa
-qualcosa di sbagliato, aggiungi la parola tra quelle da escludere del prodotto.
+A specification the title does not state does not discard the offer: it stays as a warning to check. Used, refurbished, accessories and
+whole computers are recognized in many languages, including Chinese, Japanese and Korean. A word list is not perfect: if something wrong
+gets through, add the word to the product's words to exclude.
 
-## Punteggio, offerte incerte e scartate
+## Score, uncertain and discarded offers
 
-Ogni titolo riceve un punteggio di somiglianza, come in un motore di ricerca: i numeri di modello pesano tre volte le altre parole e
-una parola scritta quasi uguale conta. Un'offerta che non corrisponde del tutto ma non sbaglia il numero di modello e arriva almeno al
-60% resta visibile come **Incerto**, in fondo all'elenco: viene scelta solo se non c'è altro. Le offerte scartate non spariscono: in
-fondo a ogni prodotto del report c'è l'elenco col motivo, dalle più vicine a ciò che cerchi.
+Each title gets a similarity score, as in a search engine: model numbers weigh three times as much as other words, and a nearly
+identical word counts. An offer that does not fully match but does not get the model number wrong and reaches at least 60% stays visible
+as **Uncertain**, at the bottom of the list: it is chosen only if there is nothing else. Discarded offers do not disappear: at the bottom
+of each product in the report is the list with the reason, starting from those closest to what you are looking for.
 
-Quando nel titolo c'è il codice del produttore, lo stesso prodotto viene riconosciuto in tutti i negozi: il report dice quante offerte
-ha quel modello e da quale prezzo, e un prezzo è anomalo rispetto allo stesso modello invece che a tutta la categoria.
+When the title contains the manufacturer's code, the same product is recognized in all shops: the report says how many offers that
+model has and from what price, and a price is judged unusual against the same model rather than the whole category.
 
-## IA locale
+## Local AI
 
-Se sul computer c'è [Ollama](https://ollama.com) con un modello, PriceWatch lo usa per le offerte dubbie. Si attiva e si spegne in
-**Impostazioni**. Nulla esce dal computer e, se Ollama non è attivo, il giro continua con le sole regole.
+If [Ollama](https://ollama.com) with a model is on the computer, PriceWatch uses it for doubtful offers. Turn it on or off in
+**Settings**. Nothing leaves the computer and, if Ollama is not running, the run continues with the rules alone.
 
-Un modello piccolo sbaglia, quindi fa solo ciò in cui è stato misurato affidabile (`python tools/prova_ia.py`):
+A small model makes mistakes, so it does only what it has been measured to do reliably (`python tools/prova_ia.py`):
 
-- legge valori che le regole non capiscono. Un numero che non compare davvero nel titolo viene ignorato;
-- riconosce accessori e computer interi. Un'offerta incerta viene tolta e finisce tra le scartate; un'offerta che le regole
-  considerano buona resta visibile, segnata come dubbia e con affidabilità bassa.
+- it reads values the rules do not understand. A number that does not actually appear in the title is ignored;
+- it recognizes accessories and whole computers. An uncertain offer is removed and goes among the discarded ones; an offer the rules
+  consider good stays visible, marked as doubtful and with low reliability.
 
-Non decide se il modello è quello giusto (nelle prove confondeva RTX 5070 e 5070 Ti) e non decide i prezzi: restano alle regole. Su un
-portatile senza scheda video servono circa 5 secondi a offerta, quindi controlla al massimo 40 offerte per prodotto e si ferma dopo 5
-minuti, partendo da quelle dei negozi del tuo Paese. I titoli già visti non si ricontrollano.
+It does not decide whether the model is the right one (in tests it confused the RTX 5070 and 5070 Ti) and does not decide prices: those
+stay with the rules. On a laptop without a graphics card it takes about 5 seconds per offer, so it checks at most 40 offers per product
+and stops after 5 minutes, starting with the shops in your country. Titles already seen are not checked again.
 
-## Grado di affidabilità
+## Reliability grade
 
-Ogni offerta, nel report e su Telegram, ha un grado. L'esito sopra dice se è il prodotto giusto, il grado dice quanto fidarsi
-di prezzo e prodotto.
+Each offer, in the report and on Telegram, has a grade. The result above says whether it is the right product; the grade says how far to
+trust the price and the product.
 
-| Grado | Quando |
+| Grade | When |
 |---|---|
-| Alta | Nessun punto di rischio |
-| Media | Da 1 a 3 punti |
-| Bassa | 4 punti o più, oppure prezzo anomalo o negozio da verificare |
+| High | No risk points |
+| Medium | 1 to 3 points |
+| Low | 4 points or more, or an unusual price or a shop to verify |
 
-Un punto ciascuno: negozio estero, prezzo convertito, sito letto col browser, sito letto in modo approssimativo, ogni specifica
-non indicata nel titolo. Due punti: segnalazione da un canale Telegram.
+One point each: foreign shop, converted price, site read with the browser, site read approximately, each specification not stated in the
+title. Two points: a report from a Telegram channel.
 
-L'offerta scelta è la meno cara tra quelle senza dubbi su negozio e prezzo, esatte o superiori, senza dogana e con le specifiche lette.
-Un negozio di un altro Paese dell'UE compete quindi col prezzo: resta l'avviso di verificare la spedizione. Se manca, si passa alle
-simili, poi ai negozi fuori dall'UE, dove dogana e commissioni non sono nel prezzo. Il grado di affidabilità resta scritto accanto. Il prezzo più basso, se è un altro, resta visibile con il motivo per cui va verificato.
+The chosen offer is the cheapest among those with no doubts about shop and price, exact or better, with no customs and with the
+specifications read. A shop in another EU country therefore competes on price, with a reminder to check delivery. If there is none, it
+moves on to similar offers, then to shops outside the EU, where customs and fees are not included in the price. The reliability grade
+stays written next to it. The lowest price, if it is a different offer, stays visible with the reason it needs checking.
 
-## Siti
+## Sites
 
-Il catalogo copre tutto il mondo, compresi negozi internazionali e cinesi come AliExpress. Al primo avvio sono attivi tutti i siti
-che hanno funzionato alla prova, di qualsiasi Paese: il Paese che scegli decide solo quali compaiono per primi e quali sono "esteri".
-Ogni sito si può spegnere, togliere con la **×** (e ripristinare) o aggiungere: incolli l'indirizzo di una ricerca e indichi Paese e
-valuta del sito.
+The catalogue covers the whole world, including international and Chinese shops such as AliExpress. On first launch, all the sites that
+worked when tested are on, from any country: the country you choose only decides which appear first and which count as foreign. Each
+site can be turned off, removed with the **×** (and restored) or added: paste the address of a search and state the site's country and
+currency.
 
-AliExpress parte tra i "negozi da considerare dubbi": le sue offerte si vedono ma viene scelta solo se non c'è altro. Puoi cambiarlo
-in **Impostazioni**.
+AliExpress starts among the shops to treat as doubtful: its offers are visible but one is chosen only if there is nothing else. You can
+change this in **Settings**.
 
-Per RAM e SSD, quando cerchi la categoria e non un marchio, su AliExpress si cercano anche i marchi cinesi: KingBank, Gloway, Netac,
-KingSpec, Lexar e Fanxiang. I siti dei produttori quasi non mostrano prezzi. Molte inserzioni elencano più varianti ("16GB/32GB"): il
-prezzo è spesso quello della più economica, quindi restano visibili ma segnate come dubbie e non vengono scelte.
+For RAM and SSDs, when you search for the category and not a brand, AliExpress is also searched for Chinese brands: KingBank, Gloway,
+Netac, KingSpec, Lexar and Fanxiang. Manufacturers' sites hardly show any prices. Many listings show several variants ("16GB/32GB"): the
+price is often that of the cheapest, so they stay visible but are marked as doubtful and are not chosen.
 
-I negozi noti che bloccano la ricerca automatica si raggiungono in altri modi. Da Trovaprezzi, che resta attivo di default, arrivano
-le offerte di eBay, Unieuro, MediaWorld, Amazon, Kaufland, BPM Power e altri, col nome del negozio e il link: PriceWatch apre fino a 5
-schede di prodotto per ricerca. Di Euronics si leggono le pagine prodotto: incolla il link in "Pagine da controllare direttamente" nella
-finestra del prodotto. ePrice per ora non è raggiungibile.
+Well-known shops that block automated searches are reached in other ways. Trovaprezzi, which stays on by default, supplies offers from
+eBay, Unieuro, MediaWorld, Amazon, Kaufland, BPM Power and others, with the shop name and link: PriceWatch opens up to 5 product pages per
+search. For Euronics, product pages are read: paste the link in "Pages to check directly" in the product window. ePrice cannot be reached
+for now.
 
-Per eBay la via giusta è l'interfaccia ufficiale: crea una chiave gratuita "Production" su developer.ebay.com e inserisci App ID e
-Cert ID in **Impostazioni**. Da quel momento eBay del tuo Paese entra da solo in ogni giro, solo oggetti nuovi a prezzo fisso, senza
-bisogno di Chrome. Per gli altri negozi che bloccano, **Risultati** ha i pulsanti che aprono la ricerca nel tuo browser: lì guardi tu,
-perché l'app non pilota il browser per aggirare i blocchi.
+For eBay the right way is the official interface: create a free "Production" key on developer.ebay.com and enter the App ID and Cert ID
+in **Settings**. From then on, eBay in your country joins every run by itself, new fixed-price items only, with no need for Chrome. For
+other shops that block automated access, **Results** has buttons that open the search in your browser: you look there yourself, because
+the app does not drive the browser to get around blocks.
 
-I siti costruiti in JavaScript si aprono con un browser invisibile (Chromium, circa 150 MB, scaricato al primo avvio). Non si apre
-nessuna finestra: le loro offerte finiscono nello stesso giro, nello stesso report e nello stesso messaggio Telegram degli altri siti.
-Una pagina che non risponde viene chiusa e il giro prosegue. Alcuni siti chiedono comunque l'accesso o una verifica anti-bot (JD, Temu,
-Shopee, Lazada) o non mostrano offerte senza accesso (Taobao, Tmall): PriceWatch non entra negli account e non aggira queste verifiche.
+Sites built in JavaScript are opened with an invisible browser (Chromium, about 150 MB, downloaded on first launch). No window opens:
+their offers end up in the same run, report and Telegram message as the other sites. A page that does not respond is closed and the run
+continues. Some sites still ask for a login or an anti-bot check (JD, Temu, Shopee, Lazada) or show no offers without a login (Taobao,
+Tmall): PriceWatch does not log in to accounts or get around these checks.
 
-Nel catalogo ogni sito mostra l'esito dell'ultima prova. "Bloccato" vuol dire che il sito rifiuta le richieste automatiche:
-PriceWatch non prova ad aggirare captcha o sistemi anti-bot. Può dipendere anche dal Paese da cui ti colleghi, quindi prova il
-sito col pulsante **Prova**: lo stesso sito può funzionare da un'altra rete.
+In the catalogue, each site shows the outcome of its last test. "Blocked" means the site refuses automated requests: PriceWatch does not
+try to get around captchas or anti-bot systems. It can also depend on the country you connect from, so test the site with the **Test**
+button: the same site may work from another network.
 
-I prezzi in un'altra valuta vengono convertiti nella tua col cambio della Banca Centrale Europea, scaricato al massimo una volta ogni 12 ore. L'offerta mostra il prezzo originale e la
-data del cambio. Il prezzo convertito è indicativo: dogana, commissioni della carta e spedizione verso il tuo Paese non sono
-incluse, quindi a parità di condizioni viene preferito un negozio senza questi avvisi.
+Prices in another currency are converted into yours at the European Central Bank rate, downloaded at most once every 12 hours. The offer
+shows the original price and the rate date. The converted price is indicative: customs, card fees and shipping to your country are not
+included, so, other things being equal, a shop without these warnings is preferred.
 
-Senza rete si usa l'ultimo cambio salvato, fino a 14 giorni. Oltre, i siti in un'altra valuta vengono saltati e il report lo dice.
-I canali Telegram si leggono nella tua valuta. Le pagine dirette si convertono solo se dichiarano la propria valuta nei dati della
-pagina.
+Offline, the last saved rate is used, for up to 14 days. After that, sites in another currency are skipped and the report says so.
+Telegram channels are read in your currency. Direct pages are converted only if they declare their currency in the page data.
 
-Le pause tra le richieste allo stesso sito (3–6 s) sono volute. Se un sito blocca o dà errore due volte di fila, si ferma fino
-al giro successivo.
+The pauses between requests to the same site (3–6 s) are intentional. If a site blocks or gives an error twice in a row, it stops until
+the next run.
 
-## File
+## Files
 
-Tutto ciò che è tuo sta in `dati/`: `config.yaml` (con il token Telegram, da non condividere), storico, cambi, report e registro.
-Per passare l'app a qualcuno, escludi quella cartella.
+Everything of yours is in `dati/`: `config.yaml` (with the Telegram token, not to be shared), history, exchange rates, reports and the
+log. To pass the app to someone, leave that folder out.
 
-Per riprovare tutto il catalogo:
+To test the whole catalogue again:
 
     python tools/prova_catalogo.py
 
-Per i test:
+To run the tests:
 
     python tests/test_universal.py
