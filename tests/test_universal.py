@@ -907,7 +907,7 @@ def test_ebay_errori_senza_segreti():
         page, items = ebay.search(EBAY_CFG, "x", "EBAY_IT")
     finally:
         ebay.requests.post = orig
-    assert not page.ok and items == [] and "chiave rifiutata" in page.error and "SEGRETO" not in page.error
+    assert not page.ok and items == [] and "key rejected" in page.error and "SEGRETO" not in page.error
 
 
 def test_ebay_salvato_senza_toccare_il_resto():
