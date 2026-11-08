@@ -1,4 +1,4 @@
-"""Testi prodotti dal motore (avvisi, report, Telegram). I testi della GUI stanno in gui/app.js."""
+"""Texts produced by the engine (alerts, reports, Telegram). GUI texts are in gui/app.js."""
 from __future__ import annotations
 
 TEXT = {
@@ -129,6 +129,6 @@ def money(cfg: dict, v, currency: str | None = None) -> str:
 
 
 def original_price(cfg: dict, offer: dict) -> str:
-    """Il prezzo nella valuta del negozio, se l'offerta è stata convertita."""
+    """The price in the shop's currency, if the offer was converted."""
     extra = offer.get("extra") or {}
     return money(cfg, extra["prezzo_orig"], extra["valuta_orig"]) if extra.get("valuta_orig") else ""

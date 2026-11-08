@@ -1,4 +1,4 @@
-"""Avvio automatico ogni N ore, a orari fissi da mezzanotte. A PC spento il giro salta e riparte al successivo."""
+"""Automatic start every N hours, at fixed times from midnight. With the PC off the run is skipped and restarts at the next one."""
 from __future__ import annotations
 
 import base64

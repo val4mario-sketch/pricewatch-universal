@@ -1,4 +1,4 @@
-"""Prova ogni sito del catalogo con una sola ricerca e salva l'esito in pw/catalog_status.json."""
+"""Tests each catalogue site with a single search and saves the result in pw/catalog_status.json."""
 import json
 import sys
 from collections import Counter
@@ -22,17 +22,17 @@ def one(site):
     return site["id"], res
 
 
-# con --ripeti riprova, lentamente, i siti che non hanno funzionato: tante richieste insieme fanno scattare i blocchi;
-# con --nuovi prova solo i siti mai provati
+# with --ripeti it retries, slowly, the sites that did not work: many requests at once trigger the blocks;
+# with --nuovi it tests only sites never tested
 status_file = ROOT / "pw" / "catalog_status.json"
 old = json.loads(status_file.read_text(encoding="utf-8")) if status_file.exists() else {}
 todo = [s for s in SITES if old.get(s["id"], {}).get("esito") != "ok"] if "--ripeti" in sys.argv else SITES
 if "--nuovi" in sys.argv:
     todo = [s for s in SITES if s["id"] not in old]
-if "--ids" in sys.argv:  # solo i siti indicati: --ids unieuro,bpm
+if "--ids" in sys.argv:  # only the given sites: --ids unieuro,bpm
     wanted = sys.argv[sys.argv.index("--ids") + 1].split(",")
     todo = [s for s in SITES if s["id"] in wanted]
-if "--browser" in sys.argv:  # i siti che si aprono col browser invisibile, uno alla volta
+if "--browser" in sys.argv:  # sites that open with the invisible browser, one at a time
     todo = [s for s in SITES if s.get("browser")]
 with ThreadPoolExecutor(max_workers=1 if "--ripeti" in sys.argv or "--browser" in sys.argv else 6) as ex:
     results = {**old, **dict(ex.map(one, todo))}

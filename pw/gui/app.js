@@ -89,7 +89,7 @@ function tr(key, vars) {
   return text;
 }
 
-/** Crea un elemento: i testi passano sempre da textContent, mai da innerHTML. */
+/** Creates an element: texts always go through textContent, never innerHTML. */
 function h(tag, props, ...kids) {
   const el = document.createElement(tag);
   for (const [k, v] of Object.entries(props || {})) {
@@ -153,7 +153,7 @@ function field(label, control, hint) {
   return h('label', { class: 'field' }, label, control, hint ? h('span', { class: 'hint' }, hint) : null);
 }
 
-/** Elenco di voci: Invio aggiunge, la x rimuove. values è modificato sul posto. */
+/** List of entries: Enter adds, x removes. values is modified in place. */
 function tagInput(values, placeholder) {
   const list = h('div', { class: 'chips' });
   const input = h('input', { placeholder, 'aria-label': placeholder });
@@ -202,7 +202,7 @@ function specLabel(s) {
 
 function openProduct(existing) {
   const p = existing ? structuredClone(existing) : { nome: '', attivo: true, ricerca: [], specifiche: [], alternative: [], esclusi: [], pagine: [], accetta_simili: true, prezzo_min: null, prezzo_max: null, soglia_avviso: null };
-  // i termini uguali al nome non vanno mostrati come scelta dell'utente
+  // terms equal to the name must not be shown as the user's choice
   if (p.ricerca.length === 1 && p.ricerca[0] === p.nome) p.ricerca = [];
   const dlg = $('dialog');
 
@@ -602,7 +602,7 @@ function render() {
   $('nav').replaceChildren(...['products', 'sites', 'auto', 'results', 'settings'].map((id) => h('button', { type: 'button', 'aria-current': tab === id ? 'page' : null, id: `nav-${id}`, onclick: async () => {
     tab = id;
     if (id === 'auto') {
-      try { S.log = (await api('/api/run')).log; } catch { /* il registro è facoltativo */ }
+      try { S.log = (await api('/api/run')).log; } catch { /* the log is optional */ }
     }
     render();
   } }, tr(`nav.${id}`))));

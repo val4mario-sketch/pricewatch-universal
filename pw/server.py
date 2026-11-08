@@ -1,4 +1,4 @@
-"""GUI locale: serve la pagina e le API solo su questo PC (127.0.0.1)."""
+"""Local GUI: serves the page and the APIs on this PC only (127.0.0.1)."""
 from __future__ import annotations
 
 import json
@@ -16,7 +16,7 @@ from .rules import Rules
 
 GUI = Path(__file__).with_name("gui")
 TYPES = {".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8"}
-TOKEN = secrets.token_urlsafe(24)  # le altre pagine aperte nel browser non possono chiamare le API senza questo
+TOKEN = secrets.token_urlsafe(24)  # other pages open in the browser cannot call the APIs without this
 _run_lock = threading.Lock()
 _proc: subprocess.Popen | None = None
 _plan_active: bool | None = None  # chiedere a Windows richiede circa un secondo: basta farlo una volta
@@ -38,7 +38,7 @@ def estimate(cfg: dict) -> dict:
     for x in tasks:
         host = x.url.split("/")[2]
         hosts[host] = hosts.get(host, 0) + 1
-    # 4,5 s di pausa media per sito: fino a 8 siti diversi girano in parallelo
+    # average 4.5 s pause per site: up to 8 different sites run in parallel
     minutes = round((max(max(hosts.values(), default=0), len(tasks) / 8) * 4.5 + sum(x.browser for x in tasks) * 9) / 60 + 0.5)
     return {"richieste": len(tasks), "minuti": minutes, "valuta_diversa": sorted(skipped)}
 
@@ -74,7 +74,7 @@ def try_title(body: dict) -> dict:
     probe = {**cfg, "prodotti": [{**product, "attivo": True}]}
     price = settings._number(body.get("prezzo"), "price")
     lo = product.get("prezzo_min") or 0
-    prices = [price] if price is not None else [max(lo, 1)]  # senza prezzo si prova solo il titolo
+    prices = [price] if price is not None else [max(lo, 1)]  # without a price only the title is tested
     d = Rules(probe).classify(body.get("titolo", ""), prices, hint=product["id"])
     return {"ok": d.ok, "livello": d.level, "etichetta": t(cfg, f"level.{d.level}") if d.level else "", "motivo": d.reason,
             "avvisi": d.warnings, "note": d.tags}
@@ -97,7 +97,7 @@ def post(path: str, body: dict):
     if path == "/api/config":
         settings.save(settings.apply_update(cfg, body))
         if "intervallo_ore" in body.get("generale", {}) and plan_status(3)["attiva"]:
-            schedule.enable(settings.load()["generale"]["intervallo_ore"])  # cambia subito gli orari
+            schedule.enable(settings.load()["generale"]["intervallo_ore"])  # changes the times immediately
         return state()
     if path == "/api/schedule":
         if body.get("attiva"):
@@ -151,7 +151,7 @@ class Handler(BaseHTTPRequestHandler):
     def _json(self, code: int, data):
         self._send(code, json.dumps(data, ensure_ascii=False).encode("utf-8"))
 
-    def _local_host(self) -> bool:  # blocca siti che puntano un loro dominio a 127.0.0.1
+    def _local_host(self) -> bool:  # blocks sites that point one of their domains at 127.0.0.1
         host = (self.headers.get("Host") or "").split(":")[0]
         return host in ("127.0.0.1", "localhost")
 
@@ -197,7 +197,7 @@ def _report_time():
 
 def serve(port: int = 8771, open_browser: bool = True):
     server = None
-    for candidate in range(port, port + 20):  # porta occupata: prova la successiva
+    for candidate in range(port, port + 20):  # port in use: try the next one
         try:
             server = ThreadingHTTPServer(("127.0.0.1", candidate), Handler)
             break
@@ -207,7 +207,7 @@ def serve(port: int = 8771, open_browser: bool = True):
         raise SystemExit("No free port")
     url = f"http://127.0.0.1:{server.server_address[1]}/"
     print(f"PriceWatch: {url}")
-    threading.Thread(target=rates.get, daemon=True).start()  # così la GUI sa già se i siti esteri sono utilizzabili
+    threading.Thread(target=rates.get, daemon=True).start()  # so the GUI already knows whether foreign sites are usable
     if open_browser:
         threading.Timer(0.4, webbrowser.open, [url]).start()
     server.serve_forever()

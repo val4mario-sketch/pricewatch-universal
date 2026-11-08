@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""PriceWatch Universale: controlla i prezzi dei prodotti scelti nella GUI.
+"""PriceWatch Universal: checks the prices of the products chosen in the GUI.
 
-Comandi:
-  python pricewatch.py              apre la GUI
-  python pricewatch.py gui [--porta N] [--senza-browser]
-  python pricewatch.py run [--prodotto ID]
+Commands:
+  python pricewatch.py              opens the GUI
+  python pricewatch.py gui [--port N] [--no-browser]
+  python pricewatch.py run [--product ID]
 """
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ LOG_LIMIT = 2_000_000
 
 
 def _open_log():
-    """Il giro scrive nel log, anche senza console (pythonw.exe dall'Utilità di pianificazione)."""
+    """A run writes to the log, even with no console (pythonw.exe from Task Scheduler)."""
     settings.DATA.mkdir(parents=True, exist_ok=True)
     path = settings.DATA / "pricewatch.log"
     mode = "w" if path.exists() and path.stat().st_size > LOG_LIMIT else "a"
@@ -36,7 +36,7 @@ def _open_log():
 
 
 def _acquire_lock() -> Path | None:
-    """Un giro alla volta. Un blocco più vecchio del limite dell'attività (2 ore) è rimasto da un crash."""
+    """One run at a time. A lock older than the task limit (2 hours) was left behind by a crash."""
     lock = settings.DATA / "run.lock"
     if lock.exists() and time.time() - lock.stat().st_mtime > 2 * 3600:
         lock.unlink()
@@ -48,7 +48,7 @@ def _acquire_lock() -> Path | None:
 
 
 def send_summary(cfg, store, report_path):
-    # di notte il riepilogo arriva senza suono; gli avvisi di prezzo suonano sempre
+    # at night the summary arrives silently; price alerts always make a sound
     now = datetime.now()
     silent = now.hour >= 23 or now.hour < 8
     print("summary:", notify.send(cfg, report.telegram_summary(cfg, store), silent=silent))
@@ -85,10 +85,10 @@ def main():
     ap = argparse.ArgumentParser(description="PriceWatch Universale")
     sub = ap.add_subparsers(dest="cmd")
     p = sub.add_parser("gui")
-    p.add_argument("--porta", type=int, default=8771)
-    p.add_argument("--senza-browser", action="store_true")
+    p.add_argument("--port", "--porta", dest="porta", type=int, default=8771)
+    p.add_argument("--no-browser", "--senza-browser", dest="senza_browser", action="store_true")
     p = sub.add_parser("run")
-    p.add_argument("--prodotto")
+    p.add_argument("--product", "--prodotto", dest="prodotto")
     a = ap.parse_args()
     if a.cmd == "run":
         cmd_run(a)

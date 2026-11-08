@@ -5,8 +5,8 @@ find the exact model, it suggests a similar or better one and says so. It runs o
 
 Requires Python 3.10 or later.
 
-- **Windows:** double-click `Avvia PriceWatch.bat`
-- **macOS and Linux:** `sh avvia.sh`
+- **Windows:** double-click `Start PriceWatch.bat`
+- **macOS and Linux:** `sh start.sh`
 
 The first time, it installs the libraries by itself. Then a page opens in your browser, with four sections.
 
@@ -67,7 +67,7 @@ model has and from what price, and a price is judged unusual against the same mo
 If [Ollama](https://ollama.com) with a model is on the computer, PriceWatch uses it for doubtful offers. Turn it on or off in
 **Settings**. Nothing leaves the computer and, if Ollama is not running, the run continues with the rules alone.
 
-A small model makes mistakes, so it does only what it has been measured to do reliably (`python tools/prova_ia.py`):
+A small model makes mistakes, so it does only what it has been measured to do reliably (`python tools/try_ai.py`):
 
 - it reads values the rules do not understand. A number that does not actually appear in the title is ignored;
 - it recognizes accessories and whole computers. An uncertain offer is removed and goes among the discarded ones; an offer the rules
@@ -141,12 +141,12 @@ the next run.
 
 ## Files
 
-Everything of yours is in `dati/`: `config.yaml` (with the Telegram token, not to be shared), history, exchange rates, reports and the
+Everything of yours is in `data/` (`dati/` in older installations): `config.yaml` (with the Telegram token, not to be shared), history, exchange rates, reports and the
 log. To pass the app to someone, leave that folder out.
 
 To test the whole catalogue again:
 
-    python tools/prova_catalogo.py
+    python tools/test_catalog.py
 
 To run the tests:
 

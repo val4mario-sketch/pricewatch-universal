@@ -1,5 +1,5 @@
-"""Apre una pagina col browser invisibile e scrive il risultato in JSON. Gira in un processo a parte: se la pagina
-si pianta, fetch.py lo chiude allo scadere del tempo e il giro prosegue."""
+"""Opens a page with the invisible browser and writes the result as JSON. Runs in a separate process: if the page
+hangs, fetch.py closes it when time runs out and the run continues."""
 import json
 import sys
 
@@ -12,7 +12,7 @@ def main(url: str, user_agent: str, goto_ms: int, headless: bool):
         page = browser.new_context(user_agent=user_agent, viewport={"width": 1366, "height": 900}).new_page()
         resp = page.goto(url, timeout=goto_ms, wait_until="domcontentloaded")
         page.wait_for_timeout(3000)
-        for _ in range(3):  # scorre per caricare i risultati "lazy"
+        for _ in range(3):  # scrolls to load "lazy" results
             page.mouse.wheel(0, 2500)
             page.wait_for_timeout(700)
         sys.stdout.write(json.dumps({"url": page.url, "status": resp.status if resp else 200, "html": page.content()}))

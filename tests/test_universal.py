@@ -43,10 +43,10 @@ def test_simile_automatico_e_segnalato():
 
 
 def test_niente_simile_se_manca_la_prima_parola_o_ne_mancano_due():
-    assert judge("GeForce GT 5070 Ti").level == "incerto", "resta visibile, ma non come simile"
+    assert judge("GeForce GT 5070 Ti").level == "incerto", "stays visible, but not as similar"
     assert not judge("GeForce RTX 4060").ok
-    assert not judge("Septpenta RTX 3060 Ti").ok, "numero di modello diverso"
-    assert not judge("MSI RTX 5060 Ti").ok, "numero di modello diverso"
+    assert not judge("Septpenta RTX 3060 Ti").ok, "different model number"
+    assert not judge("MSI RTX 5060 Ti").ok, "different model number"
 
 
 def test_alternative_indicate():
@@ -54,7 +54,7 @@ def test_alternative_indicate():
     assert judge("ASUS RTX 5080 Prime", alternative=alts).level == "superiore"
     assert judge("Zotac RTX 4080 Super", alternative=alts).level == "simile"
     d = Rules({**CFG, "prodotti": [settings.clean_product({"id": "p", "nome": "RTX 5070", "alternative": [{"testo": "RTX 5070 Ti", "tipo": "superiore"}]})]})
-    assert d.classify("Asus RTX 5070 Ti", [900], hint="p").level == "superiore", "il nome più lungo vince"
+    assert d.classify("Asus RTX 5070 Ti", [900], hint="p").level == "superiore", "the longest name wins"
 
 
 def test_usato_e_accessori_scartati():
@@ -72,7 +72,7 @@ def test_prezzo_fuori_margine():
     assert judge("RTX 5070 Ti", price=1000, prezzo_min=500, prezzo_max=1500).ok
 
 
-# ------------------------------------------------------------------ specifiche e margini
+# ------------------------------------------------------------------ specifications and margins
 RAM = {"nome": "Capacità", "op": "min", "valore": "16", "unita": "GB", "margine_pct": 25}
 
 
@@ -132,7 +132,7 @@ def test_prezzi_nelle_varie_valute():
     assert [p[0] for p in extract.prices_in("¥128,000", "JPY")] == [128000.0]
     assert [p[0] for p in extract.prices_in("₹74,999", "INR")] == [74999.0]
     assert [p[0] for p in extract.prices_in("4 299 zł", "PLN")] == [4299.0]
-    assert extract.prices_in("$100", "EUR") == [], "un'altra valuta non è un prezzo valido"
+    assert extract.prices_in("$100", "EUR") == [], "another currency is not a valid price"
 
 
 def test_siti_in_altra_valuta_saltati():
@@ -193,13 +193,13 @@ def test_cambi_salvati_e_senza_rete():
     rates._path().unlink(missing_ok=True)
     try:
         rates.requests.get = offline
-        assert rates.get(lambda _: None) is None, "niente rete e niente file"
+        assert rates.get(lambda _: None) is None, "no network and no file"
         rates.requests.get = online
         fresh_day = {**rates.parse(ECB), "data": today.today().isoformat()}
         rates.parse, parse = (lambda _: dict(fresh_day)), rates.parse
         try:
             assert rates.get()["tassi"]["USD"] == 1.1172 and len(calls) == 1
-            assert rates.get()["tassi"]["USD"] == 1.1172 and len(calls) == 1, "entro 12 ore non riscarica"
+            assert rates.get()["tassi"]["USD"] == 1.1172 and len(calls) == 1, "does not download again within 12 hours"
             saved = json.loads(rates._path().read_text(encoding="utf-8"))
             saved["scaricati"] = 0
             rates._path().write_text(json.dumps(saved), encoding="utf-8")
@@ -229,8 +229,8 @@ def test_prezzo_convertito_prima_di_giudicare():
     assert o["extra"]["valuta_orig"] == "USD" and o["extra"]["prezzo_orig"] == 1000.0
     w = next(x for x in o["warnings"] if "convertito" in x)
     assert "$1.000,00" in w and "30/10/2026" in w and "dogana" in w
-    assert _classify(item, prezzo_max=700) == [], "il massimo vale nella tua valuta"
-    assert _classify(item, prezzo_min=900) == [], "il minimo vale nella tua valuta"
+    assert _classify(item, prezzo_max=700) == [], "the maximum applies in your currency"
+    assert _classify(item, prezzo_min=900) == [], "the minimum applies in your currency"
     assert len(_classify(item, prezzo_max=900)) == 1
 
 
@@ -249,7 +249,7 @@ def test_vale_la_valuta_dichiarata_dalla_pagina():
     items = extract.jsonld_products(extract.BeautifulSoup(page, "lxml"), "https://x/")
     assert sorted(i.currency for i in items) == ["EUR", "GBP"]
     gbp = next(i for i in items if i.currency == "GBP")
-    assert _classify(gbp, "EUR")[0]["total"] == 1000.0, "sito in euro che espone sterline"
+    assert _classify(gbp, "EUR")[0]["total"] == 1000.0, "euro site showing pounds"
     assert _classify(gbp, "EUR", None) == []
     meta = '<h1>MSI RTX 5070 Ti</h1><meta property="product:price:amount" content="800"><meta property="product:price:currency" content="GBP">'
     assert extract.meta_product(extract.BeautifulSoup(meta, "lxml"), "https://x/").currency == "GBP"
@@ -295,7 +295,7 @@ def test_valuta_del_sito_aggiunto():
         pass
 
 
-# ------------------------------------------------------------------ siti di tutto il mondo
+# ------------------------------------------------------------------ sites from all over the world
 def test_al_primo_avvio_siti_di_tutto_il_mondo():
     active = catalog.default_active()
     paesi = {s["paese"] for s in catalog.SITES if s["id"] in active}
@@ -341,7 +341,7 @@ def test_prezzi_nelle_valute_asiatiche():
     assert [p[0] for p in extract.prices_in("119 990 Ft", "HUF")] == [119990.0]
 
 
-# ------------------------------------------------------------------ filtri in più lingue
+# ------------------------------------------------------------------ filters in several languages
 def test_usato_e_accessori_in_altre_lingue():
     for title in ("MSI RTX 5070 Ti używana", "MSI RTX 5070 Ti gebraucht", "MSI RTX 5070 Ti reconditionnée", "MSI RTX 5070 Ti begagnad",
                   "MSI RTX 5070 Ti 中古", "二手 MSI RTX 5070 Ti", "MSI RTX 5070 Ti 중고", "Kabel RTX 5070 Ti", "RTX 5070 Ti ケーブル",
@@ -359,17 +359,17 @@ def test_computer_intero_scartato():
 
 
 def test_filtro_computer_non_tocca_i_componenti():
-    assert judge("MSI RTX 5070 Ti for gaming pc").ok, "senza processore non è un computer"
+    assert judge("MSI RTX 5070 Ti for gaming pc").ok, "without a processor it is not a computer"
     assert judge("Case PC gaming RTX 5070 Ti ready").ok
     cfg = {**CFG, "prodotti": [settings.clean_product({"id": "p", "nome": "Laptop Lenovo Legion"})]}
-    assert Rules(cfg).classify("Laptop Lenovo Legion Core i7 14700HX", [900], hint="p").ok, "il laptop è ciò che si cerca"
+    assert Rules(cfg).classify("Laptop Lenovo Legion Core i7 14700HX", [900], hint="p").ok, "the laptop is what is wanted"
     cfg = {**CFG, "prodotti": [settings.clean_product({"id": "p", "nome": "Ryzen 7 7800X3D"})]}
     assert Rules(cfg).classify("AMD Ryzen 7 7800X3D processore", [300], hint="p").ok
     cfg = {**CFG, "prodotti": [settings.clean_product({"id": "p", "nome": "Samsung 990 Pro"})]}
     assert Rules(cfg).classify("Samsung 990 Pro SSD 2TB NVMe per notebook", [150], hint="p").ok
 
 
-# ------------------------------------------------------------------ affidabilità
+# ------------------------------------------------------------------ reliability
 def test_gradi_di_affidabilita():
     cfg = {**CFG, "prodotti": [product()]}
     base = {"metodo": "selettori", "estero": False, "browser": False, "spec_non_lette": 0}
@@ -388,14 +388,14 @@ def test_a_parita_di_modello_vince_il_piu_affidabile():
     cfg = {**CFG, "prodotti": [product()]}
     near = {**_offer(1000), "extra": {"metodo": "selettori"}}
     far = {**_offer(900), "extra": {"estero": True, "valuta_orig": "USD", "dogana": True}}
-    assert quality.picks([far, near], cfg)["p"]["total"] == 1000, "fuori dall'UE il prezzo non è completo"
+    assert quality.picks([far, near], cfg)["p"]["total"] == 1000, "outside the EU the price is not complete"
 
 
 def test_grado_in_report_e_telegram():
     cfg = {**CFG, "prodotti": [product()]}
     store = _store([{**_offer(1000), "extra": {"estero": True}}, _offer(1100)])
     txt = report.telegram_summary(cfg, store)
-    assert "1.000,00 €</b> · Affidabilità media" in txt, "il negozio UE meno caro vince e il grado lo dice"
+    assert "1.000,00 €</b> · Affidabilità media" in txt, "the cheapest EU shop wins and the grade says so"
     path = Path(os.environ["PW_DATA"]) / "r3.html"
     page = Path(report.generate(cfg, store, str(path))).read_text(encoding="utf-8")
     assert 'class="rel alta"' in page and 'class="rel media"' in page and "L'affidabilità dice" in page
@@ -466,8 +466,8 @@ def test_comparatore_apre_le_schede_raggruppate():
     sel = {"item": "li.o", "titolo": ".t", "prezzo": ".p", "negozio": ".s"}
     res = runner.run_task(Fake(), runner.Task("tp", "ricerca", "https://t.test/s", "p", sel=sel, expand="a.relevant_item"))
     assert len(res.pages) == 3 and sorted(i.title for i in res.items) == ["MSI RTX 5070 Ti OC", "PNY RTX 5070 Ti OC"]
-    assert {i.shop for i in res.items} == {"eBay"}, "resta il negozio vero"
-    assert [i.prices for i in res.items] == [[1300.0], [1300.0]], "non il prezzo 'da...' della scheda"
+    assert {i.shop for i in res.items} == {"eBay"}, "the real shop stays"
+    assert [i.prices for i in res.items] == [[1300.0], [1300.0]], "not the 'from...' price of the product page"
     assert extract.card_links(search * 4, "https://t.test/", "a.relevant_item", 1) == ["https://t.test/schede/msi"]
 
 
@@ -502,11 +502,11 @@ def test_siti_nuovi_si_attivano_ma_quelli_spenti_no():
     settings.CONFIG.parent.mkdir(parents=True, exist_ok=True)
     catalog.tested_status = lambda: {"amazon_it": {"esito": "ok"}, "yeppon": {"esito": "ok"}, "conrad_it": {"esito": "ok"}, "fnac": {"esito": "bloccato"}}
     try:
-        # configurazione vecchia, senza elenco dei siti visti
+        # old configuration, with no list of seen sites
         settings.CONFIG.write_text(yaml.safe_dump({"siti": {"attivi": ["amazon_it"]}}), encoding="utf-8")
         attivi = settings.load()["siti"]["attivi"]
         assert {"amazon_it", "yeppon", "conrad_it", "trovaprezzi"} <= set(attivi) and "fnac" not in attivi
-        # l'utente spegne Yeppon e toglie Conrad: non tornano
+        # the user turns off Yeppon and removes Conrad: they do not come back
         cfg = settings.load()
         settings.apply_update(cfg, {"siti": {"attivi": ["amazon_it"], "rimossi": ["conrad_it"]}})
         settings.save(cfg)
@@ -577,7 +577,7 @@ def test_valori_nel_nome_anche_per_altri_prodotti():
     assert rules.classify("Samsung 990 Pro SSD 2TB NVMe", [200], hint="p").level == "superiore"
     assert not rules.classify("Samsung SSD 500GB", [50], hint="p").ok
     assert not rules.classify("WD HDD 1TB", [50], hint="p").ok
-    assert split_name("RTX 5070 Ti") == ("rtx 5070 ti", []), "un numero di modello non è una specifica"
+    assert split_name("RTX 5070 Ti") == ("rtx 5070 ti", []), "a model number is not a specification"
     assert split_name("iPhone 16 Pro")[1] == []
     assert split_name("Ryzen 9 9900X")[1] == []
     assert split_name("32GB")[0] == "32GB"
@@ -587,24 +587,24 @@ def test_termine_di_ricerca_senza_parole_generiche():
     p = settings.clean_product({"id": "p", "nome": RAM_NAME})
     assert runner.search_terms(p) == ["32 GB ddr5 6000 CL30"]
     p = settings.clean_product({"id": "p", "nome": RAM_NAME, "ricerca": ["kit ram corsair", "DDR5 32GB"]})
-    assert runner.search_terms(p) == ["kit ram corsair", "DDR5 32GB"], "i termini scritti da te restano"
+    assert runner.search_terms(p) == ["kit ram corsair", "DDR5 32GB"], "terms written by you stay"
 
 
 def test_prezzi_letti_male_tolti_ma_non_quelli_solo_bassi():
     offers = [_offer(t) for t in (0.19, 2.18, 185, 500, 520, 540, 560)]
-    assert [o["total"] for o in runner.drop_misread(offers)] == [185, 500, 520, 540, 560], "185 resta: lo segnala l'anomalia"
+    assert [o["total"] for o in runner.drop_misread(offers)] == [185, 500, 520, 540, 560], "185 stays: the anomaly flags it"
     few = [_offer(t) for t in (2, 500, 520)]
-    assert len(runner.drop_misread(few)) == 3, "con poche offerte non si può dire"
+    assert len(runner.drop_misread(few)) == 3, "with few offers it cannot be said"
 
 
 def test_punteggio_e_livello_incerto():
     assert match_score("rtx 5070 ti", norm("MSI RTX 5070 Ti"))[0] == 100
-    assert match_score("rtx 5070 ti", norm("RTX 3060 Ti"))[1], "manca il numero di modello"
+    assert match_score("rtx 5070 ti", norm("RTX 3060 Ti"))[1], "the model number is missing"
     assert match_score("rtx 5070 ti", norm("GeForce RTX5070Ti"))[1] is False
     d = judge("GeForce 5070 16G")
     assert d.ok and d.level == "incerto" and any("verifica" in w for w in d.warnings)
     cfg = {**CFG, "prodotti": [settings.clean_product({"id": "p", "nome": "iPhone 16 Pro"})]}
-    assert not Rules(cfg).classify("Apple iPhone 15 Pro", [900], hint="p").ok, "numero di modello diverso"
+    assert not Rules(cfg).classify("Apple iPhone 15 Pro", [900], hint="p").ok, "different model number"
     cfg = {**CFG, "prodotti": [settings.clean_product({"id": "p", "nome": "Ryzen 9 9900X"})]}
     assert Rules(cfg).classify("AMD 9900X CPU tray", [300], hint="p").level == "incerto"
     assert not Rules(cfg).classify("AMD Ryzen 9 9950X", [300], hint="p").ok
@@ -621,7 +621,7 @@ def test_incerto_scelto_solo_se_non_c_e_altro():
     only = [_offer(800, "incerto")]
     assert quality.picks(only, cfg)["p"]["level"] == "incerto" and only[0]["affidabilita"] == "media"
     txt = report.telegram_summary(cfg, _store([_offer(800, "incerto"), _offer(1000)]))
-    assert "Più basso" not in txt, "un incerto non è il prezzo da battere"
+    assert "Più basso" not in txt, "an uncertain offer is not the price to beat"
 
 
 def test_codice_del_produttore():
@@ -637,7 +637,7 @@ def test_stesso_modello_e_prezzo_anomalo_per_modello():
     twin = lambda v: {**_offer(v), "extra": {"codice": "KD5AGU880"}}  # noqa: E731
     offers = [twin(300), twin(800), twin(820), twin(840), _offer(290), _offer(300), _offer(310), _offer(320)]
     quality.assess(offers, cfg)
-    assert offers[0]["dubbia"] and any("anomalo" in w for w in offers[0]["warnings"]), "basso per quel modello, anche se non per la categoria"
+    assert offers[0]["dubbia"] and any("anomalo" in w for w in offers[0]["warnings"]), "low for that model, even if not for the category"
     assert offers[1]["stesso_modello"] == (4, 300)
     assert offers[4]["stesso_modello"] is None
     store = _store([twin(800), twin(820)])
@@ -657,7 +657,7 @@ def test_scartate_salvate_col_motivo():
     run_id = store.last_run()["id"]
     store.add_discarded(run_id, out)
     n, rows = store.discarded_of_run(run_id, "p")
-    assert n == 2 and rows[0]["title"] == "Cavo RTX 5070 Ti", "prima la più vicina"
+    assert n == 2 and rows[0]["title"] == "Cavo RTX 5070 Ti", "closest first"
     page = Path(report.generate(cfg, store, str(Path(os.environ["PW_DATA"]) / "r6.html"))).read_text(encoding="utf-8")
     assert "Offerte scartate: 2" in page and "RTX 3060 Ti" in page and "cavo" in page
 
@@ -691,13 +691,13 @@ def test_ia_toglie_gli_incerti_e_segna_gli_altri():
         kept = ai.review(AI_CFG, rules, offers, Store(":memory:"), out, lambda _: None)
     finally:
         ai.status, ai.ask = orig
-    assert [o["title"] for o in kept] == ["Buona", "Vera"], "l'incerto accessorio è tolto"
+    assert [o["title"] for o in kept] == ["Buona", "Vera"], "the uncertain accessory is removed"
     assert out[0]["title"] == "Dubbia" and "accessorio" in out[0]["reason"]
     good = kept[0]
     assert good["extra"]["ia_dubbio"] and any("computer intero" in w for w in good["warnings"])
     quality.assess(kept, AI_CFG)
     assert good["dubbia"] and good["affidabilita"] == "bassa"
-    assert kept[1]["extra"]["ia"] and kept[1]["level"] == "incerto", "l'IA non promuove: il modello lo decidono le regole"
+    assert kept[1]["extra"]["ia"] and kept[1]["level"] == "incerto", "the AI does not promote: the rules decide the model"
 
 
 def test_ia_legge_i_valori():
@@ -721,9 +721,9 @@ def test_ia_non_ripete_i_titoli_e_rispetta_i_limiti():
         cfg = {**AI_CFG, "generale": {**AI_CFG["generale"], "ia_max_offerte": 2}}
         store = Store(":memory:")
         ai.review(cfg, Rules(cfg), [_ai_offer(100 + i, f"T{i}", "incerto") for i in range(6)], store, [], lambda _: None)
-        assert len(calls) == 2, "massimo per prodotto"
+        assert len(calls) == 2, "maximum per product"
         ai.review(cfg, Rules(cfg), [_ai_offer(100 + i, f"T{i}", "incerto") for i in range(2)], store, [], lambda _: None)
-        assert len(calls) == 2, "già visti"
+        assert len(calls) == 2, "already seen"
         cfg0 = {**cfg, "generale": {**cfg["generale"], "ia_max_sec": 0, "ia_max_offerte": 40}}
         ai.review(cfg0, Rules(cfg0), [_ai_offer(100 + i, f"T{i}", "incerto") for i in range(2, 6)], store, [], lambda _: None)
         assert len(calls) == 2, "tempo finito"
@@ -744,12 +744,12 @@ def test_senza_ollama_il_giro_continua():
 
 
 def test_valore_inventato_dall_ia_ignorato():
-    assert ai.literal(36, "Corsair CMH32GX5M2E6000C36 32GB", "CL") == 36, "il codice del produttore può indicarlo davvero"
+    assert ai.literal(36, "Corsair CMH32GX5M2E6000C36 32GB", "CL") == 36, "the manufacturer's code can really indicate it"
     assert ai.literal(30, "Patriot Viper PVV532G600C30K", "CL") == 30
     assert ai.literal(30, "DDR5 6000 CL 30", "CL") == 30
     assert ai.literal(32, "Corsair 32 GB DDR5", "GB") == 32
     assert ai.literal(28, "DDR5 6000 CL30", "CL") is None
-    assert ai.literal(30, "Crucial 32GB DDR5 reso entro 30 giorni", "CL") is None, "un numero qualsiasi non basta"
+    assert ai.literal(30, "Crucial 32GB DDR5 reso entro 30 giorni", "CL") is None, "any number will not do"
     assert ai.literal(32, "G.Skill Trident DDR5 - Kit - 32", "GB") is None
     assert ai.literal(None, "x", "CL") is None and ai.literal("boh", "x", "CL") is None
 
@@ -776,14 +776,14 @@ def test_prezzo_al_gb_e_rate_non_sono_il_prezzo():
     d = Rules(cfg).classify("goodram IRDM RGB UDIMM 32GB Kit, DDR5-6000, CL30-38-38", [15.25, 487.95], hint="p")
     assert d.price == 487.95
     d = Rules(cfg).classify("Corsair 32GB DDR5-6000 CL30", [529.0, 649.0], hint="p")
-    assert d.price == 529.0, "sconto: vale il prezzo basso"
+    assert d.price == 529.0, "discount: the low price applies"
 
 
 def test_i_prezzi_veri_non_sono_anomali_se_ci_sono_kit_cari():
     cfg = {**CFG, "prodotti": [product()]}
     offers = [_offer(t) for t in (319, 334, 355, 379, 420, 450, 600, 650, 700, 800, 900, 1000, 1100, 1200)]
     quality.assess(offers, cfg)
-    assert not any(o["dubbia"] for o in offers), "la mediana è alta, ma questi prezzi non sono sospetti"
+    assert not any(o["dubbia"] for o in offers), "the median is high, but these prices are not suspicious"
     offers = [_offer(t) for t in (185, 319, 334, 355, 379, 420, 450, 600, 650, 700)]
     quality.assess(offers, cfg)
     assert offers[0]["dubbia"] and not offers[1]["dubbia"]
@@ -796,9 +796,9 @@ def test_negozio_ue_compete_col_prezzo():
     far = {**_offer(300), "extra": {"estero": True, "dogana": True}}
     assert quality.picks([home, german, far], cfg)["p"]["total"] == 334
     better = {**_offer(320, "superiore"), "extra": {}}
-    assert quality.pick([home, german, better])["total"] == 320, "migliore e meno caro"
+    assert quality.pick([home, german, better])["total"] == 320, "better and cheaper"
     unread = {**_offer(310), "extra": {"spec_non_lette": 1}}
-    assert quality.pick([home, unread])["total"] == 355, "con le specifiche lette prima"
+    assert quality.pick([home, unread])["total"] == 355, "with the specifications read first"
     settings_cfg = {**settings.defaults(), "generale": {**settings.defaults()["generale"], "valuta": "EUR", "paese": "IT"},
                     "prodotti": [product()], "siti": {"attivi": ["amazon_de", "scan"], "personalizzati": []}, "telegram": {"canali": []}}
     tasks = runner.build_tasks(settings_cfg, table=TABLE)[0]
@@ -813,7 +813,7 @@ def test_marchi_cinesi_su_aliexpress():
     cfg = {**base, "generale": {**base["generale"], "valuta": "EUR", "paese": "IT"}, "siti": {"attivi": ["aliexpress", "amazon_it"], "personalizzati": []},
            "telegram": {"canali": []}, "prodotti": [settings.clean_product({"id": "r", "nome": RAM_NAME})]}
     tasks = runner.build_tasks(cfg)[0]
-    assert [x.source for x in tasks].count("amazon_it") == 1, "gli altri siti non ricevono richieste in più"
+    assert [x.source for x in tasks].count("amazon_it") == 1, "the other sites get no extra requests"
     ali = [x.query for x in tasks if x.source == "aliexpress"]
     assert len(ali) == 6 and "KingBank 32 GB ddr5 6000 CL30" in ali
     for name, n in (("SSD 1TB", 6), ("Corsair ddr5 32GB", 1), ("RTX 5070 Ti", 1)):
@@ -888,12 +888,12 @@ def test_ebay_legge_le_offerte():
         runner.run_task(None, runner.build_tasks(EBAY_CFG)[0][0], EBAY_CFG)
     finally:
         ebay.requests.post, ebay.requests.get = orig
-    assert calls.count("token") == 1, "il token si riusa"
+    assert calls.count("token") == 1, "the token is reused"
     assert len(res.items) == 2 and res.items[0].shipping == 10.0 and res.items[0].shop == "eBay IT" and res.items[0].currency == "EUR"
     assert res.items[1].currency == "GBP" and res.pages[0].ok
     cfg = {**CFG, "prodotti": [product()]}
     offers, _ = runner.classify_results(cfg, Rules(cfg), [res], TABLE)
-    assert {o["total"] for o in offers} == {1210.0, 1250.0}, "la sterlina si converte"
+    assert {o["total"] for o in offers} == {1210.0, 1250.0}, "the pound is converted"
 
 
 def test_ebay_errori_senza_segreti():
@@ -929,7 +929,7 @@ def test_prezzo_thailandese():
     assert [p[0] for p in extract.prices_in("19,900.-", "THB")] == [19900.0]
 
 
-# ------------------------------------------------------------------ scelta e report
+# ------------------------------------------------------------------ choice and report
 def _offer(total, level="esatto", shop="S", warnings=(), url=None):
     return {"component": "p", "model": "M", "level": level, "title": f"RTX 5070 Ti {total}", "price": total, "shipping": None,
             "total": total, "shop": shop, "source": "f", "url": url or f"https://x/{total}?a=1&b=2", "warnings": list(warnings), "tags": []}
@@ -992,7 +992,7 @@ def test_giro_vuoto_non_sostituisce_l_ultimo_e_prune():
     assert store.offers_of_run(good) == [] and store.min_before("p", 99) == 500
 
 
-# ------------------------------------------------------------------ configurazione e orari
+# ------------------------------------------------------------------ configuration and schedules
 def test_controlli_prodotto():
     for bad in ({"nome": " "}, {"nome": "x", "prezzo_min": 10, "prezzo_max": 5}, {"nome": "x", "prezzo_max": "tanto"},
                 {"nome": "x", "specifiche": [{"op": "min", "valore": "molti"}]}, {"nome": "x", "pagine": ["ftp://a"]}):
@@ -1013,7 +1013,7 @@ def test_canali_e_siti_aggiunti():
     except ValueError:
         pass
     else:
-        raise AssertionError("canale non valido accettato")
+        raise AssertionError("invalid channel accepted")
     g = settings.defaults()["generale"]
     site = settings.clean_custom_site({"url": "https://shop.example/s?q={q}"}, g)
     assert site["nome"] == "shop.example" and site["id"].startswith("custom_")

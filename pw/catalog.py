@@ -1,4 +1,4 @@
-"""Siti pronti all'uso. {q} è il termine cercato. Gli esiti delle prove reali stanno in catalog_status.json."""
+"""Ready-to-use sites. {q} is the search term. Results of the real tests are in catalog_status.json."""
 from __future__ import annotations
 
 import json
@@ -28,13 +28,13 @@ def _ebay(tld, country, cur):
 
 
 def _site(sid, name, country, cur, url, tipo="negozio", selectors=None, shop=None, espandi=""):
-    # espandi: i risultati raggruppati del comparatore, da aprire per vedere le offerte dei singoli negozi
+    # expand: the comparison site's grouped results, to open in order to see the offers of the individual shops
     return {"id": sid, "nome": name, "paese": country, "valuta": cur, "tipo": tipo, "url": url,
             "negozio": "" if tipo == "comparatore" else (shop or name), "selettori": selectors, "espandi": espandi}
 
 
 def _global(sid, name, url, selectors=None):
-    """Negozio internazionale: mostra i prezzi nella valuta di chi visita, quindi nella tua."""
+    """International shop: shows prices in the visitor's currency, so in yours."""
     return {**_site(sid, name, "WW", "USD", url, selectors=selectors), "valuta_visitatore": True}
 
 
@@ -58,7 +58,7 @@ SITES = [
     _site("comet", "Comet", "IT", "EUR", "https://www.comet.it/search?iq={q}"),
     _site("conrad_it", "Conrad.it", "IT", "EUR", "https://www.conrad.it/it/search.html?search={q}"),
     _site("nexths", "Next", "IT", "EUR", "https://www.nexths.it/Products/search?query={q}"),
-    # Germania e Austria
+    # Germany and Austria
     _site("geizhals", "Geizhals", "DE", "EUR", "https://geizhals.eu/?fs={q}&hloc=at&hloc=de&sort=p", "comparatore", _GEIZHALS),
     _site("idealo_de", "Idealo.de", "DE", "EUR", "https://www.idealo.de/preisvergleich/MainSearchProductCategory.html?q={q}", "comparatore", _IDEALO),
     _amazon("de", "DE", "EUR"), _ebay("de", "DE", "EUR"),
@@ -84,7 +84,7 @@ SITES = [
     _site("carrefour_fr", "Carrefour", "FR", "EUR", "https://www.carrefour.fr/s?q={q}"),
     _site("fnac", "Fnac", "FR", "EUR", "https://www.fnac.com/SearchResult/ResultList.aspx?Search={q}"),
     _site("darty", "Darty", "FR", "EUR", "https://www.darty.com/nav/recherche?text={q}"),
-    # Spagna e Portogallo
+    # Spain and Portugal
     _site("idealo_es", "Idealo.es", "ES", "EUR", "https://www.idealo.es/resultados.html?q={q}", "comparatore", _IDEALO),
     _amazon("es", "ES", "EUR"), _ebay("es", "ES", "EUR"),
     _site("pccomponentes_es", "PcComponentes", "ES", "EUR", "https://www.pccomponentes.com/search/?query={q}"),
@@ -93,14 +93,14 @@ SITES = [
     _site("worten_pt", "Worten", "PT", "EUR", "https://www.worten.pt/search?query={q}"),
     _site("kuantokusta", "KuantoKusta", "PT", "EUR", "https://www.kuantokusta.pt/search?q={q}", "comparatore"),
     _site("globaldata", "Globaldata", "PT", "EUR", "https://www.globaldata.pt/catalogsearch/result/?q={q}"),
-    # Paesi Bassi e Belgio
+    # Netherlands and Belgium
     _amazon("nl", "NL", "EUR"),
     _site("tweakers", "Tweakers Pricewatch", "NL", "EUR", "https://tweakers.net/zoeken/?keyword={q}", "comparatore"),
     _site("coolblue_nl", "Coolblue", "NL", "EUR", "https://www.coolblue.nl/en/search?query={q}"),
     _site("bol", "Bol", "NL", "EUR", "https://www.bol.com/nl/nl/s/?searchtext={q}"),
     _site("megekko", "Megekko", "NL", "EUR", "https://www.megekko.nl/product/{q}"),
     _site("mediamarkt_nl", "MediaMarkt.nl", "NL", "EUR", "https://www.mediamarkt.nl/nl/search.html?query={q}"),
-    # Regno Unito e Irlanda
+    # United Kingdom and Ireland
     _site("idealo_uk", "Idealo.co.uk", "GB", "GBP", "https://www.idealo.co.uk/mscat.html?q={q}", "comparatore", _IDEALO),
     _site("pricespy_uk", "PriceSpy", "GB", "GBP", "https://pricespy.co.uk/search?query={q}", "comparatore"),
     _amazon("co.uk", "GB", "GBP"), _ebay("co.uk", "GB", "GBP"),
@@ -150,7 +150,7 @@ SITES = [
     _site("kabum", "KaBuM!", "BR", "BRL", "https://www.kabum.com.br/busca/{q}"),
     _amazon("com.mx", "MX", "MXN"),
     _site("mercadolibre_mx", "Mercado Libre", "MX", "MXN", "https://listado.mercadolibre.com.mx/{q}"),
-    # Asia e Oceania
+    # Asia and Oceania
     _amazon("com.au", "AU", "AUD"), _ebay("com.au", "AU", "AUD"),
     _site("staticice", "StaticICE", "AU", "AUD", "https://www.staticice.com.au/cgi-bin/search.cgi?q={q}", "comparatore"),
     _site("scorptec", "Scorptec", "AU", "AUD", "https://www.scorptec.com.au/search/go?w={q}"),
@@ -173,7 +173,7 @@ SITES = [
     _global("geekbuying", "Geekbuying", "https://www.geekbuying.com/search?keyword={q}"),
     _global("tomtop", "Tomtop", "https://www.tomtop.com/search/{q}.html"),
     _global("joom", "Joom", "https://www.joom.com/en/search/q.{q}", {"item": "a[href*='/products/']", "titolo": "h2", "prezzo": "[class*='pricesRegularValue']"}),
-    # Cina e Hong Kong
+    # China and Hong Kong
     _site("juhor", "Juhor", "CN", "USD", "https://juhor.net/?s={q}&post_type=product"),
     _site("biwin", "BIWIN", "CN", "USD", "https://www.biwintech.com/?s={q}&post_type=product"),
     _site("jd", "JD.com", "CN", "CNY", "https://search.jd.com/Search?keyword={q}"),
@@ -182,7 +182,7 @@ SITES = [
     _site("smzdm", "SMZDM", "CN", "CNY", "https://search.smzdm.com/?c=home&s={q}", "comparatore"),
     _site("zol", "ZOL", "CN", "CNY", "https://search.zol.com.cn/s/all.php?kword={q}", "comparatore"),
     _site("pricehk", "Price.com.hk", "HK", "HKD", "https://www.price.com.hk/search.php?g=A&q={q}", "comparatore"),
-    # Corea e Giappone
+    # Korea and Japan
     _site("danawa", "Danawa", "KR", "KRW", "https://search.danawa.com/dsearch.php?query={q}", "comparatore"),
     _site("gmarket", "Gmarket", "KR", "KRW", "https://browse.gmarket.co.kr/search?keyword={q}"),
     _site("coupang", "Coupang", "KR", "KRW", "https://www.coupang.com/np/search?q={q}"),
@@ -205,29 +205,29 @@ SITES = [
     _site("pcpartpicker", "PCPartPicker", "US", "USD", "https://pcpartpicker.com/search/?q={q}", "comparatore"),
 ]
 
-# Pagine costruite in JavaScript: si aprono col browser invisibile, nello stesso giro e nello stesso report degli altri siti.
+# Pages built in JavaScript: they open with the invisible browser, in the same run and report as the other sites.
 _WITH_BROWSER = {"amazon_es", "amazon_br", "amazon_mx", "webhallen", "ceneo", "banggood", "joom", "jib", "unieuro", "bpm", "worten_pt"}
 SITES = [{**s, "browser": True} if s["id"] in _WITH_BROWSER else s for s in SITES]
-# Negozi noti che bloccano la ricerca automatica: la GUI dice come averli comunque.
+# Well-known shops that block automated searches: the GUI says how to get them anyway.
 _NOTES = {"ebay_it": "trovaprezzi", "euronics_it": "pagine", "eprice": "bloccato"}
 SITES = [{**s, "nota": _NOTES[s["id"]]} if s["id"] in _NOTES else s for s in SITES]
 
-# Codici ISO: la GUI ne mostra il nome nella lingua scelta. WW sono i negozi internazionali, non un Paese in cui vivere.
+# ISO codes: the GUI shows the name in the chosen language. WW means international shops, not a country to live in.
 COUNTRIES = ["IT", "DE", "AT", "FR", "ES", "PT", "NL", "GB", "CH", "SE", "NO", "DK", "PL", "CZ", "GR", "RO", "HU", "TR", "IL", "US", "CA", "BR", "MX",
              "AU", "NZ", "JP", "CN", "HK", "KR", "IN", "SG", "MY", "TH", "PH", "ID", "ZA", "WW"]
-# Marchi cinesi che raramente escono cercando il solo prodotto: sui siti con "marchi_cinesi" si cercano anche per nome.
+# Chinese brands that rarely turn up when searching for the product alone: on sites with "marchi_cinesi" they are also searched by name.
 CHINESE_BRANDS = [(re.compile(r"\bddr\d"), ["KingBank", "Gloway", "Netac", "KingSpec", "Lexar"]),
                   (re.compile(r"\b(?:ssd|nvme)\b"), ["Netac", "KingSpec", "Fanxiang", "Gloway", "Lexar"])]
 
 
 def brands_for(core_name: str) -> list[str]:
-    """Solo per chi cerca una categoria ("ddr5", "ssd"): chi ha scritto un marchio vuole quello."""
+    """Only for people searching for a category ("ddr5", "ssd"): someone who typed a brand wants that brand."""
     if len(core_name.split()) != 1:
         return []
     return next((brands for rx, brands in CHINESE_BRANDS if rx.search(core_name.lower())), [])
 
 
-# Tra questi Paesi niente dogana: un negozio tedesco per chi sta in Italia compete col prezzo.
+# No customs between these countries: a German shop competes on price for someone in Italy.
 EU_COUNTRIES = {"IT", "DE", "AT", "FR", "ES", "PT", "NL", "SE", "DK", "PL", "CZ", "GR", "RO", "HU"}
 CURRENCY_OF = {s["paese"]: s["valuta"] for s in SITES if s["paese"] != "WW"}
 ACCEPT_LANGUAGE = {"IT": "it-IT,it;q=0.9,en;q=0.7", "DE": "de-DE,de;q=0.9,en;q=0.7", "FR": "fr-FR,fr;q=0.9,en;q=0.7",
@@ -240,7 +240,7 @@ SUGGESTED_CHANNELS = {"IT": ["offertepuntotech", "offertesmartworld", "prezzitec
                              "VereOfferteTech", "hardwareByToms", "scontierrati", "prezzone"]}
 
 _STATUS_FILE = Path(__file__).with_name("catalog_status.json")
-GATEWAY = "trovaprezzi"  # da qui arrivano eBay e altri negozi noti: resta attivo anche se un giorno limita le richieste
+GATEWAY = "trovaprezzi"  # eBay and other well-known shops arrive from here: it stays on even if it limits requests one day
 
 
 def tested_status() -> dict:
@@ -251,7 +251,7 @@ def tested_status() -> dict:
 
 
 def site_list(cfg: dict) -> list[dict]:
-    """Catalogo più i siti aggiunti a mano, ognuno con stato di attivazione e ultimo esito di prova."""
+    """Catalogue plus manually added sites, each with its activation state and latest test result."""
     sites_cfg = cfg.get("siti") or {}
     active = set(sites_cfg.get("attivi") or [])
     status = {**tested_status(), **(sites_cfg.get("esiti") or {})}
@@ -264,16 +264,16 @@ def site_list(cfg: dict) -> list[dict]:
 
 
 def default_active() -> list[str]:
-    """Al primo avvio: tutti i siti del mondo che alla prova hanno restituito offerte, non solo quelli del tuo Paese."""
+    """On first launch: all the sites in the world that returned offers when tested, not only those in your country."""
     status = tested_status()
     return [s["id"] for s in SITES if s["id"] == GATEWAY or (status.get(s["id"]) or {}).get("esito") == "ok"]
 
 
 def newly_working(seen: list[str]) -> list[str]:
-    """I siti funzionanti entrati nel catalogo dopo l'ultimo salvataggio dell'utente."""
+    """Working sites that joined the catalogue after the user's last save."""
     return [x for x in default_active() if x not in seen]
 
 
 def site_currency(site: dict, home: str) -> str:
-    """La valuta in cui il sito scrive i prezzi per chi lo visita."""
+    """The currency in which the site writes prices for its visitors."""
     return home if site.get("valuta_visitatore") else site.get("valuta", home)

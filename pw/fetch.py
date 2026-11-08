@@ -1,4 +1,4 @@
-"""Download delle pagine con pause per dominio, impronta browser e fallback Playwright."""
+"""Page downloads with per-domain pauses, browser fingerprint and Playwright fallback."""
 from __future__ import annotations
 
 import json
@@ -17,7 +17,7 @@ from urllib.parse import urlparse
 
 import requests
 
-try:  # impersona l'impronta TLS/HTTP2 di Chrome: passa molti più controlli anti-bot
+try:  # impersonates Chrome's TLS/HTTP2 fingerprint: passes many more anti-bot checks
     from curl_cffi import requests as cffi_requests
 except Exception:  # pragma: no cover
     cffi_requests = None
@@ -35,11 +35,11 @@ BLOCK_MARKERS = ("cf-chl", "challenge-platform", "captcha-delivery", "px-captcha
                  "pardon our interruption", "attention required", "just a moment...", "datadome")
 
 
-BROWSER_EXTRA_SEC = 25  # oltre al caricamento: attesa, scorrimento e chiusura
+BROWSER_EXTRA_SEC = 25  # on top of page load: waiting, scrolling and closing
 
 
 def _kill_tree(proc: subprocess.Popen):
-    """Chiude anche Chromium, non solo il processo che lo ha avviato."""
+    """Also closes Chromium, not only the process that started it."""
     if sys.platform == "win32":
         subprocess.run(["taskkill", "/F", "/T", "/PID", str(proc.pid)], capture_output=True, creationflags=0x08000000)
     else:
@@ -61,7 +61,7 @@ class Page:
         return self.status == 200 and not self.blocked and not self.error
 
 
-# Il sito ha mandato a una pagina di accesso o di verifica anti-bot: non si prova ad aggirarla.
+# The site redirected to a login or anti-bot page: no attempt is made to get around it.
 _WALL_URL = re.compile(r"/login|passport\.|/signin|/verify/|/punish|region-ban", re.I)
 
 

@@ -1,4 +1,4 @@
-"""Regole dei prodotti scelti nella GUI: decide se un'offerta è esatta, simile, superiore o da scartare."""
+"""Rules for the products chosen in the GUI: decides whether an offer is exact, similar, better or to be discarded."""
 from __future__ import annotations
 
 import re
@@ -9,16 +9,16 @@ from .i18n import money, t
 
 _LEVELS = ("esatto", "superiore", "simile")
 
-# Scartate sempre: l'app cerca prodotti nuovi. Sono parole in più lingue, confrontate col titolo normalizzato.
+# Always discarded: the app looks for new products. These are words in several languages, compared with the normalized title.
 GLOBAL_EXCLUDED = re.compile(
     r"\b(?:usat[oa]|seconda mano|ricondizionat\w*|rigenerat\w*|refurb\w*|renewed|used|pre ?owned|second hand|gebraucht\w*|"
     r"occasion|reacondicionad\w*|difettos\w*|defective|for parts|parts only|open box|b ware|scatola vuota|empty box|"
     r"generalüberholt\w*|defekt\w*|reconditionn\w*|seconde main|usad[oa]s?|segunda mano|segunda mão|recondicionad\w*|"
     r"tweedehands|gebruikt\w*|używan\w*|powystawow\w*|odnowion\w*|begagnad\w*|begagnat|brukt\w*|brugt\w*|použit\w*|repasovan\w*|"
     r"bazarov\w*|ikinci el|yenilenmiş|folosit\w*|resigilat\w*|használt|felújított|μεταχειρισμέν\w*|bekas|terpakai|משומש)\b", re.I)
-# Nelle scritture senza spazi non esistono confini di parola: basta trovarle nel titolo.
+# In scripts without spaces there are no word boundaries: it is enough to find them in the title.
 EXCLUDED_NO_SPACES = re.compile(r"中古|整備済|ジャンク|二手|翻新|拆机|중고|리퍼|มือสอง|ใช้แล้ว")
-# Accessori: scartati, a meno che la parola non sia nel nome del prodotto cercato.
+# Accessories: discarded, unless the word is in the name of the product being searched for.
 ACCESSORIES = ("cover", "custodia", "pellicola", "screen protector", "adattatore", "adapter", "cavo", "cable",
                "ricambio", "spare part", "replacement", "staffa", "bracket", "backplate", "riser", "holder",
                "supporto", "skin", "sticker", "bundle", "combo",
@@ -26,7 +26,7 @@ ACCESSORIES = ("cover", "custodia", "pellicola", "screen protector", "adattatore
                "adaptador", "funda", "repuesto", "protector de pantalla", "capa", "cabo", "hoes", "houder", "beugel", "przejściówka",
                "etui", "uchwyt", "pokrowiec", "folia", "fodral", "hållare", "deksel", "kablo", "kılıf", "adaptör", "καλώδιο",
                "ケーブル", "変換", "カバー", "ブラケット", "ステッカー", "数据线", "转接", "支架", "保护壳", "贴纸", "케이블", "브라켓", "어댑터", "สายเคเบิล")
-# Computer interi: con uno di questi nomi e un processore nel titolo, la scheda o il componente cercato è solo una parte.
+# Whole computers: with one of these names and a processor in the title, the card or component searched for is only a part.
 SYSTEM_WORDS = ("komputer", "laptop", "notebook", "portatile", "portatil", "portátil", "gaming pc", "pc gaming", "pc da gaming", "pc gamer",
                 "desktop pc", "pc desktop", "mini pc", "computer fisso", "gaming rechner", "komplett pc", "prebuilt", "pc portable",
                 "ordinateur", "ordenador", "gamingdator", "bärbar dator", "dizüstü", "masaüstü", "bilgisayar", "počítač", "notebooku",
@@ -34,10 +34,10 @@ SYSTEM_WORDS = ("komputer", "laptop", "notebook", "portatile", "portatil", "port
 _CPU = re.compile(r"\b(?:core ?(?:ultra|i[3579])|i[3579] ?\d{4,5}|ryzen(?: ai)? ?[3579])")
 _STORAGE = re.compile(r"\b(?:ssd|nvme|hdd)\b")
 
-# Unità convertibili tra loro: valore in unità base.
+# Mutually convertible units: value in base units.
 UNIT_FAMILIES = [
     {"g": 1, "gr": 1, "kg": 1e3, "oz": 28.3495, "lb": 453.592},
-    {"b": 1e-9, "kb": 1e-6, "mb": 1e-3, "g": 1, "gb": 1, "tb": 1e3},  # "16G" nei titoli delle schede video
+    {"b": 1e-9, "kb": 1e-6, "mb": 1e-3, "g": 1, "gb": 1, "tb": 1e3},  # "16G" in graphics card titles
     {"hz": 1, "khz": 1e3, "mhz": 1e6, "ghz": 1e9},
     {"mm": 1, "cm": 10, "m": 1000, "in": 25.4, "inch": 25.4, "pollici": 25.4, '"': 25.4},
     {"w": 1, "kw": 1000, "watt": 1},
@@ -46,21 +46,21 @@ UNIT_FAMILIES = [
 ]
 
 
-# Parole che descrivono il tipo di prodotto ma che tanti titoli omettono: non servono a riconoscerlo.
+# Words that describe the product type but that many titles omit: they do not help recognize it.
 GENERIC_WORDS = {"ram", "memoria", "memorie", "memory", "kit", "modulo", "moduli"}
 _UNITS = "gb|tb|mb|mhz|ghz|hz|kw|w|mah|mm|cm"
-# Con la memoria vanno tolte le versioni per notebook e server e le schede madri che la nominano.
+# With memory, remove notebook and server versions and motherboards that mention it.
 FAMILY_EXCLUDED = [(re.compile(r"\bddr\d"), re.compile(r"\b(?:so dimm|sodimm|laptop|notebook|ecc|rdimm|registered|scheda madre|motherboard|mainboard|"
                                                          r"[abxz]\d{3}\w*)\b"))]
 
 
 def _french_units(title: str) -> str:
-    """32 Go e 1 To sono GB e TB. "To" solo con la maiuscola: "2 to 1" è inglese."""
+    """32 Go and 1 To are GB and TB. "To" only when capitalized: "2 to 1" is English."""
     return re.sub(r"(\d) ?To\b", r"\1 TB", re.sub(r"(\d) ?[Gg][Oo]\b", r"\1 GB", title))
 
 
 def norm(title: str) -> str:
-    """Titolo confrontabile: "32 GB" e "32GB" diventano uguali, "2x16GB" vale anche 32gb, "6000MT/s" vale 6000mhz."""
+    """Comparable title: "32 GB" and "32GB" become equal, "2x16GB" also counts as 32gb, "6000MT/s" counts as 6000mhz."""
     t_ = _french_units(title or "").lower().replace("×", "x").replace("–", " ").replace("—", " ")
     t_ = re.sub(r"(\d) ?mt ?/ ?s\b", r"\1mhz", t_)
     t_ = re.sub(r"[-_/,;:()\[\]|®™'`]+", " ", t_)
@@ -78,7 +78,7 @@ def _squeeze(text: str) -> str:
 
 
 def _has_word(word: str, text: str) -> bool:
-    unit = f"(?:{_UNITS})?" if word.isdigit() else ""  # "6000" vale anche per "6000mhz"
+    unit = f"(?:{_UNITS})?" if word.isdigit() else ""  # "6000" also applies to "6000mhz"
     return re.search(rf"(?<![a-z0-9]){re.escape(word)}{unit}(?![a-z0-9])", text) is not None
 
 
@@ -87,7 +87,7 @@ def _tokens(phrase: str) -> list[str]:
 
 
 def _word_in(word: str, text: str) -> bool:
-    """La parola c'è, anche scritta staccata o attaccata: "5070ti" in "5070 ti", "ti" in "rtx5070ti". "9900x" non è in "9900x3d"."""
+    """The word is present, even written apart or joined: "5070ti" in "5070 ti", "ti" in "rtx5070ti". "9900x" is not in "9900x3d"."""
     if _has_word(word, text):
         return True
     title = text.split()
@@ -100,7 +100,7 @@ def _word_in(word: str, text: str) -> bool:
 
 
 def matches_phrase(phrase: str, text: str) -> bool:
-    """Tutte le parole presenti, in qualsiasi ordine; "5070 ti" vale anche per "5070ti" e viceversa."""
+    """All words present, in any order; "5070 ti" also matches "5070ti" and vice versa."""
     words = _tokens(phrase)
     if not words:
         return False
@@ -111,7 +111,7 @@ def matches_phrase(phrase: str, text: str) -> bool:
 
 
 PRICE_FRACTION = 0.25
-UNCERTAIN_MIN = 60  # sotto questo punteggio l'offerta è scartata, anche se contiene il numero di modello
+UNCERTAIN_MIN = 60  # below this score the offer is discarded, even if it contains the model number
 
 
 def _is_model_number(word: str) -> bool:
@@ -119,8 +119,8 @@ def _is_model_number(word: str) -> bool:
 
 
 def match_score(name: str, text: str) -> tuple[int, bool]:
-    """Quanto il titolo somiglia al nome, da 0 a 100, come il punteggio di un motore di ricerca: i numeri di modello pesano
-    tre volte le altre parole, e una parola scritta quasi uguale conta. Dice anche se manca un numero di modello."""
+    """How much the title resembles the name, from 0 to 100, like a search engine score: model numbers weigh
+    three times the other words, and a nearly identical word counts. Also says whether a model number is missing."""
     words = _tokens(name)
     if not words:
         return 0, True
@@ -145,15 +145,15 @@ _NOT_A_CODE = re.compile(r"^(?:G?DDR|PC\d|RTX|GTX|RX\d|USB|PCIE|NVME|HDMI|UDIMM|
 
 
 def model_code(title: str) -> str:
-    """Il codice del produttore nel titolo (KD5AGU880-60A300F): lo stesso codice è lo stesso prodotto in ogni negozio."""
+    """The manufacturer's code in the title (KD5AGU880-60A300F): the same code is the same product in every shop."""
     codes = [c for c in _CODE.findall((title or "").upper()) if re.search(r"\d", c) and re.search(r"[A-Z]", c) and not _NOT_A_CODE.match(c)
              and sum(ch.isdigit() for ch in c) >= 2 and sum(ch.isalpha() for ch in c) >= 2]
     return max(codes, key=len) if codes else ""
 
 
 def split_name(name: str) -> tuple[str, list[dict]]:
-    """Separa il nome in ciò che identifica il prodotto e i valori da trattare come specifiche.
-    "32 GB ram ddr5 6000 CL30" diventa "ddr5" con ≥ 32 GB, ≥ 6000 MHz e ≤ CL 30: così CL28 o 64 GB valgono come superiori."""
+    """Splits the name into what identifies the product and the values to treat as specifications.
+    "32 GB ram ddr5 6000 CL30" becomes "ddr5" with ≥ 32 GB, ≥ 6000 MHz and ≤ CL 30, so CL28 or 64 GB count as better."""
     words, specs = _tokens(name), []
     is_memory = any(re.fullmatch(r"ddr\d", w) for w in words)
     core = []
@@ -184,11 +184,11 @@ def _num(text: str) -> float:
 
 
 def values_in_title(title: str, unit: str, label: str = "") -> list[float]:
-    """Numeri del titolo riferiti a un'unità, convertiti nell'unità richiesta. "2x16 GB" dà 16 e 32."""
+    """Numbers in the title that refer to a unit, converted to the required unit. "2x16 GB" gives 16 and 32."""
     text = _french_units(title or "").lower().replace("×", "x").replace("mt/s", "mhz")
     unit = unit.strip().lower()
     number = r"\d+(?:[.,]\d+)?"
-    if not unit:  # niente unità: numero subito dopo o prima del nome della specifica
+    if not unit:  # no unit: number right after or before the specification name
         name = re.escape(label.strip().lower())
         if not name:
             return []
@@ -203,18 +203,18 @@ def values_in_title(title: str, unit: str, label: str = "") -> list[float]:
         found.append(_num(val) * factor)
         if mult:
             found.append(int(mult) * _num(val) * factor)
-    # "16GBx2", "16Gx2": il numero dei moduli scritto dopo
+    # "16GBx2", "16Gx2": the number of modules written afterwards
     for val, u, mult in re.findall(rf"({number})\s*-?\s*({alt})\s*x\s*(\d)(?!\d)", text):
         found.append(int(mult) * _num(val) * (family[u] / family[unit] if family else 1))
     if family and "gb" in family:
         for val, mult in re.findall(rf"(?<![\d.,])({number})\s*x\s*(\d)\s*(?:\)|$|,|gb)", text):
             found.append(int(mult) * _num(val) * family["gb"] / family[unit])
-    # unità scritta prima del numero: "CL30", "PCIe 5"
+    # unit written before the number: "CL30", "PCIe 5"
     if not family and unit.isalpha():
         found += [_num(v) for v in re.findall(rf"(?<![a-z]){re.escape(unit)}\s*-?\s*({number})", text)]
-    if unit == "mhz" and "ddr" in text:  # "DDR5-6000", "DDR5 6400": le memorie indicano la velocità senza unità
+    if unit == "mhz" and "ddr" in text:  # "DDR5-6000", "DDR5 6400": memory states its speed without a unit
         found += [_num(v) for v in re.findall(r"(?<![\d.,])([3-9]\d{3})(?![\d.,a-z])", text)]
-    if unit == "cl":  # "C30" nei titoli delle memorie
+    if unit == "cl":  # "C30" in memory titles
         found += [_num(v) for v in re.findall(r"(?<![a-z0-9])c(\d{2})(?![a-z0-9])", text)]
     return found
 
@@ -225,20 +225,20 @@ def spec_text(spec: dict) -> str:
 
 
 def is_whole_system(text: str, wanted: str) -> str:
-    """La parola che fa capire che si vende un computer intero. Vuota se il titolo non lo è o se è proprio ciò che si cerca."""
+    """The word that shows a whole computer is being sold. Empty if the title is not one or if that is exactly what is wanted."""
     if not _CPU.search(text) or _CPU.search(wanted):
         return ""
     word = next((w for w in SYSTEM_WORDS if _has_word(w, text)), "")
     if word:
         return "" if _has_word(word, wanted) else word
-    # processore, memoria e disco elencati nello stesso titolo
+    # processor, memory and disk listed in the same title
     wants_storage = _STORAGE.search(wanted)
     return "PC" if _STORAGE.search(text) and not wants_storage and len(re.findall(r"\d+ ?(?:gb|tb)\b", text)) >= 2 else ""
 
 
 def has_variants(text: str) -> bool:
-    """Un titolo che elenca di seguito più taglie o velocità ("16gb 32gb", "5600mhz 6000mhz") è un'inserzione con più varianti:
-    il prezzo mostrato è di solito quello della più economica, non di quella che cerchi."""
+    """A title that lists several sizes or speeds in a row ("16gb 32gb", "5600mhz 6000mhz") is a multi-variant listing:
+    the price shown is usually that of the cheapest, not the one you are looking for."""
     for a, b in re.findall(r"(?<![a-z0-9])(\d+(?:gb|tb|mhz)) (\d+(?:gb|tb|mhz))(?![a-z0-9])", text):
         if a != b and re.sub(r"\d", "", a)[-2:] == re.sub(r"\d", "", b)[-2:]:
             return True
@@ -250,7 +250,7 @@ def _fmt(v: float, unit: str) -> str:
 
 
 def judge_value(spec: dict, v: float) -> str:
-    """Un valore rispetto alla specifica: ok, better, near oppure out."""
+    """A value compared with the specification: ok, better, near or out."""
     op = spec.get("op", "min")
     wanted = float(str(spec.get("valore", "")).replace(",", "."))
     margin = abs(float(spec.get("margine_pct") or 0)) / 100
@@ -293,9 +293,9 @@ class Decision:
     warnings: list[str] = field(default_factory=list)
     tags: list[str] = field(default_factory=list)
     reason: str = ""
-    unread: int = 0  # specifiche richieste che il titolo non indica
-    score: int = 100  # somiglianza del titolo al nome
-    variants: bool = False  # il prezzo può essere quello di un'altra variante
+    unread: int = 0  # requested specifications the title does not state
+    score: int = 100  # similarity of the title to the name
+    variants: bool = False  # the price may belong to another variant
 
 
 class Rules:
@@ -307,12 +307,12 @@ class Rules:
         return self.components[cid].get("nome", cid)
 
     def _identify(self, product: dict, text: str) -> tuple[str, str, list[str]] | None:
-        """Livello di partenza, nome del modello riconosciuto, avvisi. None se non c'entra."""
+        """Starting level, recognized model name, warnings. None if unrelated."""
         wanted = product.get("nome", "")
         cfg = self.cfg
         alternatives = sorted(product.get("alternative") or [], key=lambda a: -len(_tokens(a.get("testo", ""))))
         exact = matches_phrase(wanted, text)
-        for alt in alternatives:  # "RTX 5070 Ti" tra le alternative non deve contare come "RTX 5070" esatta
+        for alt in alternatives:  # "RTX 5070 Ti" among the alternatives must not count as an exact "RTX 5070"
             name = alt.get("testo", "")
             longer = len(_tokens(name)) > len(_tokens(wanted))
             if matches_phrase(name, text) and (not exact or longer):
@@ -322,13 +322,13 @@ class Rules:
             return "esatto", wanted, []
         if not product.get("accetta_simili", True):
             return None
-        # Simile automatico: il nome è lungo almeno 3 parole e ne manca una sola, che non sia la prima (marca o
-        # famiglia) né un numero di modello: "RTX 5070" è vicina a "RTX 5070 Ti", "RTX 3060 Ti" no.
+        # Automatic similar: the name is at least 3 words long and only one is missing, which is neither the first (brand or
+        # family) nor a model number: "RTX 5070" is close to "RTX 5070 Ti", "RTX 3060 Ti" is not.
         words = _tokens(wanted)
         missing = _missing_words(wanted, text)
         if len(words) >= 3 and len(missing) == 1 and missing[0] != words[0] and not re.search(r"\d", missing[0]):
             return "simile", wanted, [t(cfg, "w.similar_name", found=" ".join(w for w in words if w != missing[0]), wanted=wanted)]
-        # Incerto: somiglia abbastanza e non manca nessun numero di modello. Resta visibile in fondo, non viene scelto se c'è altro.
+        # Uncertain: similar enough and no model number missing. It stays visible at the bottom and is not chosen if there is something else.
         score, model_missing = match_score(wanted, text)
         if len(words) >= 2 and not model_missing and score >= UNCERTAIN_MIN:
             return "incerto", wanted, [t(cfg, "w.uncertain", score=score)]
@@ -393,7 +393,7 @@ class Rules:
             level = "simile"
         elif better and level == "esatto":
             level = "superiore"
-        # accanto al prezzo i negozi scrivono anche prezzo al GB, rate e sconti: quei numeri piccoli non sono il prezzo
+        # next to the price, shops also write price per GB, instalments and discounts: those small numbers are not the price
         prices = [p for p in prices if p >= PRICE_FRACTION * max(prices)] if prices else prices
         lo = float(product.get("prezzo_min") or 0)
         hi = float(product.get("prezzo_max") or 1e12)

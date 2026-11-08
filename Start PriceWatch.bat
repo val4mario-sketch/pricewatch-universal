@@ -2,7 +2,7 @@
 cd /d "%~dp0"
 where python >nul 2>nul
 if errorlevel 1 (
-  echo Python non trovato / Python not found: https://www.python.org/downloads/
+  echo Python not found: https://www.python.org/downloads/
   pause
   exit /b 1
 )

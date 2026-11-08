@@ -1,4 +1,4 @@
-"""Storico prezzi in SQLite."""
+"""Price history in SQLite."""
 from __future__ import annotations
 
 import json
@@ -51,7 +51,7 @@ class Store:
         self.db.commit()
 
     def last_run(self):
-        # un giro senza offerte (di solito senza connessione) non sostituisce l'ultimo riuscito
+        # a run with no offers (usually no connection) does not replace the last successful one
         return self.db.execute("SELECT * FROM runs WHERE sources IS NOT NULL AND id IN (SELECT run_id FROM offers) "
                                "ORDER BY id DESC LIMIT 1").fetchone()
 
@@ -81,13 +81,13 @@ class Store:
         return [(r[0], r[1]) for r in rows]
 
     def prune(self, keep_days: int = 60):
-        """Tiene le offerte recenti. I minimi in `best` restano: bastano per storico e avvisi."""
+        """Keeps recent offers. The lows in `best` remain: they are enough for history and alerts."""
         limit = (datetime.now() - timedelta(days=keep_days)).isoformat(timespec="seconds")
         self.db.execute("DELETE FROM offers WHERE ts < ?", (limit,))
         self.db.commit()
 
     def add_discarded(self, run_id: int, rows: list[dict], per_product: int = 1000):
-        """Le offerte scartate col motivo, le più vicine a ciò che si cerca. Servono solo gli ultimi giri."""
+        """Discarded offers with the reason, closest to what is wanted first. Only the latest runs are needed."""
         counts: dict[str, int] = {}
         keep = []
         for r in sorted(rows, key=lambda x: -x.get("score", 0)):

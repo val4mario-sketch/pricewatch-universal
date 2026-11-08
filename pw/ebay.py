@@ -1,4 +1,4 @@
-"""Offerte eBay dall'interfaccia ufficiale (Browse API). Serve una chiave gratuita di developer.ebay.com."""
+"""eBay offers from the official interface (Browse API). Needs a free key from developer.ebay.com."""
 from __future__ import annotations
 
 import time
@@ -61,7 +61,7 @@ def _item(raw: dict, market: str) -> RawItem | None:
 
 
 def search(cfg: dict, query: str, market: str, limit: int = 50, timeout: float = 25) -> tuple[Page, list[RawItem]]:
-    """Solo oggetti nuovi a prezzo fisso, dal meno caro. Gli errori non contengono mai chiavi né token."""
+    """New fixed-price items only, cheapest first. Errors never contain keys or tokens."""
     url = search_url(query, market)
     try:
         r = requests.get(SEARCH_URL, timeout=timeout, headers={"Authorization": f"Bearer {_token(cfg)}", "X-EBAY-C-MARKETPLACE-ID": market},

@@ -1,4 +1,4 @@
-"""Report HTML autonomo (un solo file, si apre con doppio clic o dal telefono)."""
+"""Self-contained HTML report (a single file, opens with a double click or from a phone)."""
 from __future__ import annotations
 
 import html
@@ -69,10 +69,10 @@ def _spark(cfg, points: list[tuple[str, float]]) -> str:
 
 
 def telegram_summary(cfg: dict, store) -> str:
-    """Messaggio di fine giro: l'offerta più affidabile di ogni prodotto e, se più basso, il prezzo da verificare."""
+    """End-of-run message: the most reliable offer for each product and, if lower, the price to verify."""
     rules = Rules(cfg)
     run = store.last_run()
-    offers = quality.assess(store.offers_of_run(run["id"]), cfg)  # già ordinate per totale
+    offers = quality.assess(store.offers_of_run(run["id"]), cfg)  # already sorted by total
     total, missing, blocks = 0.0, 0, []
     for cid in rules.components:
         name = _e(rules.name(cid))
@@ -153,7 +153,7 @@ def generate(cfg: dict, store, path: str) -> str:
         low_note = t(cfg, "report.low", price=money(cfg, low["total"])) if low["total"] < best["total"] else ""
         tiles.append(f'<div class="tile"><div class="k">{_e(name)}</div><div class="v">{money(cfg, best["total"])}</div></div>')
         rows = []
-        # prima i negozi senza dogana: quelli lontani, che costano di più di quanto sembra, non devono riempire la cima dell'elenco
+        # shops with no customs first: distant ones, which cost more than they seem to, must not fill the top of the list
         for o in sorted(offs, key=lambda x: (x["level"] == "incerto", bool((x.get("extra") or {}).get("dogana")), x["total"])):
             ship = (t(cfg, "ship.free") if o["shipping"] == 0
                     else t(cfg, "ship.plus", price=money(cfg, o["shipping"])) if o["shipping"] else t(cfg, "ship.na"))

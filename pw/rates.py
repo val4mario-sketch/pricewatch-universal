@@ -1,4 +1,4 @@
-"""Cambi di riferimento della Banca Centrale Europea, salvati in dati/cambi.json. Niente account né chiavi."""
+"""European Central Bank reference rates, saved in the data folder. No account or keys."""
 from __future__ import annotations
 
 import json
@@ -12,8 +12,8 @@ import requests
 from . import settings
 
 URL = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
-FRESH_HOURS = 12      # la BCE pubblica una volta al giorno
-MAX_AGE_DAYS = 14     # oltre, meglio saltare il sito che confrontare prezzi con un cambio vecchio
+FRESH_HOURS = 12      # the ECB publishes once a day
+MAX_AGE_DAYS = 14     # beyond that, better to skip the site than to compare prices at an old rate
 
 
 def _path():
@@ -29,7 +29,7 @@ def parse(xml: str) -> dict | None:
 
 
 def cached() -> dict | None:
-    """I cambi salvati, se non sono troppo vecchi. Non usa la rete."""
+    """The saved rates, if not too old. Does not use the network."""
     try:
         saved = json.loads(_path().read_text(encoding="utf-8"))
         if (date.today() - date.fromisoformat(saved["data"])).days <= MAX_AGE_DAYS and saved["tassi"]:
@@ -40,7 +40,7 @@ def cached() -> dict | None:
 
 
 def get(log=print) -> dict | None:
-    """Cambi aggiornati. Senza rete restano buoni quelli salvati; senza nemmeno quelli ritorna None."""
+    """Up-to-date rates. Offline, the saved ones remain valid; without those either, returns None."""
     saved = cached()
     if saved and time.time() - float(saved.get("scaricati") or 0) < FRESH_HOURS * 3600:
         return saved
@@ -62,7 +62,7 @@ def get(log=print) -> dict | None:
 
 
 def factor(table: dict | None, source: str, target: str) -> float | None:
-    """Per quanto moltiplicare un prezzo in `source` per averlo in `target`. None se il cambio non c'è."""
+    """What to multiply a price in `source` by to get it in `target`. None if the rate is missing."""
     if source == target:
         return 1.0
     rates_ = (table or {}).get("tassi") or {}

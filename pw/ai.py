@@ -1,5 +1,5 @@
-"""Piccola IA locale (Ollama) per le offerte dubbie. Facoltativa: se non c'è, il giro va avanti con le sole regole.
-Niente esce dal computer. L'IA non decide mai il prezzo, e un valore che non compare nel titolo viene ignorato."""
+"""Small local AI (Ollama) for doubtful offers. Optional: without it, the run continues with the rules alone.
+Nothing leaves the computer. The AI never decides the price, and a value that does not appear in the title is ignored."""
 from __future__ import annotations
 
 import hashlib
@@ -24,7 +24,7 @@ SYSTEM = ("You check titles of shop listings. Judge only from the title and neve
 
 
 def status(timeout: float = 1.5) -> dict:
-    """Ollama risponde? Quali modelli ha?"""
+    """Does Ollama respond? Which models does it have?"""
     try:
         r = requests.get(f"{URL}/api/tags", timeout=timeout)
         r.raise_for_status()
@@ -40,8 +40,8 @@ def choose_model(wanted: str, installed: list[str]) -> str:
 
 
 def literal(value, title: str, unit: str) -> float | None:
-    """Il numero deve stare accanto alla sua unità ("32 GB", "CL 30") o dentro un codice ("C30K"). Un numero qualsiasi non basta:
-    nelle prove il modello leggeva "reso entro 30 giorni" come CL30."""
+    """The number must be next to its unit ("32 GB", "CL 30") or inside a code ("C30K"). Any number will not do:
+    in tests the model read "returns within 30 days" as CL30."""
     try:
         number = float(value)
     except (TypeError, ValueError):
@@ -52,7 +52,7 @@ def literal(value, title: str, unit: str) -> float | None:
 
 
 def ask(model: str, name: str, specs: list[dict], title: str, timeout: float = 60) -> dict | None:
-    """Giudizio su un titolo, già ripulito. None se il modello non risponde in modo utilizzabile."""
+    """Verdict on an already cleaned title. None if the model gives no usable answer."""
     units = list(dict.fromkeys(str(s.get("unita") or s.get("nome")) for s in specs))
     schema = {"type": "object", "required": ["kind", "values"], "properties": {
         "kind": {"type": "string", "enum": list(KINDS)}, 
@@ -81,19 +81,19 @@ def timed(*args, **kw) -> tuple[dict | None, float]:
 
 def _doubtful(o: dict) -> bool:
     extra = o.get("extra") or {}
-    # le regole riconoscono meglio le parole delle lingue con l'alfabeto latino
+    # the rules recognize words in Latin-alphabet languages better
     return o.get("level") == "incerto" or bool(extra.get("spec_non_lette")) or re.search(r"[^\x00-\u024f]", o.get("title") or "") is not None
 
 
 def _candidates(offers: list[dict], limit: int) -> list[dict]:
-    """Le dubbie più alcune tra le migliori: prima i negozi del tuo Paese, dal prezzo più basso."""
+    """The doubtful offers plus some of the best: the shops in your country first, from the lowest price."""
     ranked = sorted(offers, key=lambda o: (bool((o.get("extra") or {}).get("estero")), o["total"]))
     top = [o for o in ranked if not _doubtful(o)][:3]
     return (top + [o for o in ranked if _doubtful(o)])[:limit]
 
 
 def review(cfg: dict, rules, offers: list[dict], store, rejected: list[dict], log=print) -> list[dict]:
-    """Controlla le offerte dubbie. Ritorna quelle che restano; le tolte finiscono tra le scartate."""
+    """Checks the doubtful offers. Returns those that remain; the removed ones go among the discarded."""
     g = cfg.get("generale", {})
     if not g.get("ia_attiva"):
         return offers
@@ -135,7 +135,7 @@ def _discard(o: dict, reason: str, rejected: list[dict]):
 
 
 def _apply(cfg: dict, o: dict, answer: dict, core: str, specs: list[dict], rejected: list[dict]) -> bool:
-    """Applica il giudizio. False se l'offerta va tolta."""
+    """Applies the verdict. False if the offer must be removed."""
     extra = o.setdefault("extra", {})
     extra["ia"] = True
     kind = answer.get("kind")
@@ -145,7 +145,7 @@ def _apply(cfg: dict, o: dict, answer: dict, core: str, specs: list[dict], rejec
         if o.get("level") == "incerto":
             _discard(o, t(cfg, "r.ai", kind=label), rejected)
             return False
-        # le regole la considerano buona: l'IA può sbagliare, quindi resta visibile ma non viene scelta
+        # the rules consider it good: the AI can be wrong, so it stays visible but is not chosen
         extra["ia_dubbio"] = True
         text = t(cfg, "w.ai_kind", kind=label)
         if text not in o["warnings"]:

@@ -1,4 +1,4 @@
-"""Configurazione scritta dalla GUI: lettura, valori iniziali e controlli prima di salvare."""
+"""Configuration written by the GUI: reading, initial values and checks before saving."""
 from __future__ import annotations
 
 import locale
@@ -12,7 +12,7 @@ import yaml
 from . import catalog
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = Path(os.environ.get("PW_DATA") or ROOT / "dati")
+DATA = Path(os.environ.get("PW_DATA") or (ROOT / "dati" if (ROOT / "dati").exists() else ROOT / "data"))
 CONFIG = DATA / "config.yaml"
 OPS = {"min", "max", "eq", "text"}
 LEVELS = {"simile", "superiore"}
@@ -48,7 +48,7 @@ def load() -> dict:
         saved = yaml.safe_load(CONFIG.read_text(encoding="utf-8")) or {}
         for key, value in saved.items():
             cfg[key] = {**cfg[key], **value} if isinstance(cfg.get(key), dict) and isinstance(value, dict) else value
-        # Un sito funzionante aggiunto al catalogo dopo l'ultimo salvataggio si accende; uno che l'utente ha spento resta spento.
+        # A working site added to the catalogue after the last save is turned on; one the user turned off stays off.
         sites = saved.get("siti") or {}
         seen = sites.get("visti") or sites.get("attivi") or []
         removed = cfg["siti"].get("rimossi") or []
@@ -61,7 +61,7 @@ def save(cfg: dict) -> dict:
     DATA.mkdir(parents=True, exist_ok=True)
     tmp = CONFIG.with_suffix(".tmp")
     tmp.write_text(yaml.safe_dump(cfg, allow_unicode=True, sort_keys=False), encoding="utf-8")
-    os.replace(tmp, CONFIG)  # niente file a metà se il PC si spegne mentre salva
+    os.replace(tmp, CONFIG)  # no half-written file if the PC shuts down while saving
     return cfg
 
 
@@ -111,7 +111,7 @@ def clean_product(p: dict) -> dict:
 
 
 def clean_channel(value: str) -> str:
-    """Accetta nome, @nome o link t.me."""
+    """Accepts name, @name or a t.me link."""
     text = str(value).strip()
     text = re.sub(r"^(https?://)?(www\.)?(t\.me|telegram\.me)/(s/)?", "", text).lstrip("@").split("/")[0].split("?")[0]
     if not re.fullmatch(r"[A-Za-z][A-Za-z0-9_]{3,31}", text):
@@ -134,7 +134,7 @@ def clean_custom_site(s: dict, general: dict) -> dict:
 
 
 def apply_update(cfg: dict, update: dict) -> dict:
-    """Controlla ciò che arriva dalla GUI e lo unisce alla configurazione. Lancia ValueError se qualcosa non va."""
+    """Checks what arrives from the GUI and merges it into the configuration. Raises ValueError if something is wrong."""
     if "prodotti" in update:
         cfg["prodotti"] = [clean_product(p) for p in update["prodotti"]]
     if "generale" in update:

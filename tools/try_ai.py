@@ -1,5 +1,5 @@
-"""Misura precisione e velocità del modello locale su titoli etichettati a mano.
-Uso: python tools/prova_ia.py [modello]"""
+"""Measures the precision and speed of the local model on hand-labelled titles.
+Usage: python tools/try_ai.py [model]"""
 import sys
 from collections import Counter
 from pathlib import Path
@@ -11,7 +11,7 @@ from pw import ai  # noqa: E402
 from pw.rules import split_name  # noqa: E402
 
 RAM, GPU, SSD, CPU = "32 GB ram ddr5 6000 CL30", "RTX 5070 Ti", "SSD 1TB", "Ryzen 9 9900X"
-# prodotto cercato, titolo, tipo giusto, stesso modello (None = non conta), valori che il titolo indica davvero
+# product searched for, title, right type, same model (None = does not count), values the title really states
 CASES = [
     (RAM, "Patriot Viper Venom DDR5 32GB (2 x 16GB) 6000MT/s Kit di Memoria Desktop UDIMM", "product", True, {"CL": None}),
     (RAM, "Corsair Vengeance RGB CMH32GX5M2E6000C36 32 GB DDR5 a 6000 MHz", "product", True, {"CL": 36}),
@@ -57,7 +57,7 @@ for name, title, kind, same, values in CASES:
     res, sec = ai.timed(model, core, specs, title, timeout=120)
     times.append(sec)
     if res is None:
-        print(f"  NESSUNA RISPOSTA {title[:60]}")
+        print(f"  NO ANSWER {title[:60]}")
         continue
     ok_kind += res["kind"] == kind
     flagged = res["kind"] in ACTED_ON
@@ -69,6 +69,6 @@ for name, title, kind, same, values in CASES:
         val_ok += res["values"].get(unit) == want
     mark = "" if res["kind"] == kind else "  <<<"
     print(f"{sec:5.1f}s {res['kind'][:14]:14} {res['values']} | {title[:62]}{mark}", flush=True)
-print(f"\ntipo giusto {ok_kind}/{len(CASES)} | valori {val_ok}/{val_n}")
-print(f"accessori, PC interi e usati riconosciuti {caught}/{bad_total} | falsi allarmi {false_alarm}")
-print(f"secondi: primo {times[0]:.1f}, media degli altri {sum(times[1:]) / (len(times) - 1):.1f}, massimo {max(times):.1f}")
+print(f"\nright type {ok_kind}/{len(CASES)} | values {val_ok}/{val_n}")
+print(f"accessories, whole PCs and used items recognized {caught}/{bad_total} | false alarms {false_alarm}")
+print(f"seconds: first {times[0]:.1f}, average of the others {sum(times[1:]) / (len(times) - 1):.1f}, maximum {max(times):.1f}")

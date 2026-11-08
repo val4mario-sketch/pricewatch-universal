@@ -1,11 +1,11 @@
-"""Estrazione di offerte (titolo, prezzi, link, negozio) da pagine HTML.
+"""Extraction of offers (title, prices, link, shop) from HTML pages.
 
-Strategie, in ordine:
-  1. selettori CSS configurati per la fonte
-  2. dati strutturati JSON-LD (schema.org Product / ItemList)
-  3. estrattore euristico: ogni prezzo nella valuta del sito viene associato al link-prodotto
-     più vicino nel DOM. È rumoroso, ma le regole dei componenti scartano
-     tutto ciò che non corrisponde, quindi il rumore non arriva al report.
+Strategies, in order:
+  1. CSS selectors configured for the source
+  2. JSON-LD structured data (schema.org Product / ItemList)
+  3. heuristic extractor: each price in the site's currency is paired with the nearest
+     product link in the DOM. It is noisy, but the component rules discard
+     anything that does not match, so the noise does not reach the report.
 """
 from __future__ import annotations
 
@@ -17,11 +17,11 @@ from urllib.parse import urljoin, urlparse
 
 from bs4 import BeautifulSoup, Tag
 
-# ------------------------------------------------------------------ prezzi
+# ------------------------------------------------------------------ prices
 _NUM = r"(?<![\w.,])(?:\d{1,3}(?:[.  ]\d{3})+(?:,\d{1,2})?|\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?|\d+(?:[.,]\d{1,2})?)"
 _SPLIT_EURO = re.compile(r"(?<![\d.,])(\d{1,4})\s*€\s*(\d{2})(?!\d)")  # "457€95" (LDLC)
 
-# Come ogni valuta compare accanto al prezzo. Il dollaro semplice vale per più Paesi: decide la valuta del sito.
+# How each currency appears next to the price. A plain dollar sign is used by several countries: the site's currency decides.
 CURRENCY_TOKENS = {
     "EUR": r"€|\beur\b|\beuro\b",
     "USD": r"us\$|\$|\busd\b",
@@ -54,7 +54,7 @@ CURRENCY_TOKENS = {
     "HUF": r"\bft\b|\bhuf\b",
 }
 _RX_CACHE: dict[str, tuple] = {}
-_SPACE_THOUSANDS = {"PLN", "SEK", "NOK", "DKK", "CZK", "HUF"}  # "4 299 zł"; altrove "2 399" può essere una quantità e un prezzo
+_SPACE_THOUSANDS = {"PLN", "SEK", "NOK", "DKK", "CZK", "HUF"}  # "4 299 zł"; elsewhere "2 399" can be a quantity and a price
 
 
 def _money_rx(cur: str) -> tuple:
@@ -89,11 +89,11 @@ def to_float(s: str) -> float | None:
 
 
 def prices_in(text: str, cur: str = "EUR") -> list[tuple[float, int, int]]:
-    """Tutti i prezzi nella valuta indicata trovati nel testo: (valore, inizio, fine)."""
+    """All the prices in the given currency found in the text: (value, start, end)."""
     if not text:
         return []
     found: list[tuple[float, int, int]] = []
-    if cur in _SPACE_THOUSANDS:  # stessa lunghezza: le posizioni restano valide
+    if cur in _SPACE_THOUSANDS:  # same length: positions stay valid
         text = re.sub(r"(?<=\d) (?=\d{3}(?!\d))", " ", text)
     work = text
     for m in (_SPLIT_EURO.finditer(text) if cur == "EUR" else ()):
@@ -147,7 +147,7 @@ class RawItem:
     total: float | None = None
     strategy: str = ""
     extra: dict = field(default_factory=dict)
-    currency: str = ""  # valuta dichiarata dalla pagina; vuota = quella del sito
+    currency: str = ""  # currency declared by the page; empty = the site's currency
 
 
 def _clean(s: str | None) -> str:
@@ -253,7 +253,7 @@ def _offer_prices(offers) -> tuple[list[float], str, str, str]:
         spec = o.get("priceSpecification") if isinstance(o.get("priceSpecification"), dict) else {}
         code = _currency_code(o.get("priceCurrency") or spec.get("priceCurrency"))
         if code and currency and code != currency:
-            continue  # la stessa offerta in più valute: i prezzi non vanno mescolati
+            continue  # the same offer in several currencies: the prices must not be mixed
         currency = currency or code
         for k in ("price", "lowPrice"):
             v = o.get(k)
@@ -283,7 +283,7 @@ def jsonld_products(soup: BeautifulSoup, base_url: str, only_lists: bool = False
         if offers is None:
             continue
         if only_lists and isinstance(offers, dict) and "aggregateoffer" in _types(offers):
-            continue  # prezzo aggregato di una famiglia di prodotti: non affidabile
+            continue  # aggregate price for a product family: not reliable
         prices, url, seller, currency = _offer_prices(offers)
         if not prices:
             continue
@@ -384,7 +384,7 @@ def heuristic_items(soup: BeautifulSoup, base_url: str, fixed_shop: str = "", cu
 
 
 def card_links(html: str, base_url: str, css: str, limit: int) -> list[str]:
-    """I link delle schede raggruppate di un comparatore."""
+    """The links of a comparison site's grouped product pages."""
     found = [urljoin(base_url, a["href"]) for a in BeautifulSoup(html, "lxml").select(css) if a.get("href")]
     return list(dict.fromkeys(found))[:limit]
 
@@ -414,7 +414,7 @@ def product_page_item(html: str, base_url: str, sel: dict | None = None, cur: st
     if m:
         m.shop = shop_from_url(base_url)
         return [m], "meta"
-    # Amazon e simili
+    # Amazon and similar
     t = soup.select_one("#productTitle")
     p = soup.select_one("#corePrice_feature_div .a-offscreen, #corePriceDisplay_desktop_feature_div .a-offscreen, .a-price .a-offscreen")
     if t is not None and p is not None:
@@ -436,7 +436,7 @@ def product_page_item(html: str, base_url: str, sel: dict | None = None, cur: st
 
 # ------------------------------------------------------------------ Telegram
 def telegram_items(html: str, handle: str, max_days: int, cur: str = "EUR") -> tuple[list[RawItem], int | None]:
-    """Legge la pagina pubblica t.me/s/<canale>. Ritorna (offerte, id_più_vecchio)."""
+    """Reads the public page t.me/s/<channel>. Returns (offers, oldest_id)."""
     soup = BeautifulSoup(html, "lxml")
     out: list[RawItem] = []
     oldest = None

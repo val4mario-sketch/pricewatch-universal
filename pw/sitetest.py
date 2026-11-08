@@ -1,4 +1,4 @@
-"""Prova un sito con una ricerca vera e dice quante offerte pertinenti riesce a leggere."""
+"""Tests a site with a real search and says how many relevant offers it can read."""
 from __future__ import annotations
 
 from urllib.parse import quote_plus
@@ -15,7 +15,7 @@ def test_site(site: dict, query: str = "samsung ssd", fetcher: Fetcher | None = 
     try:
         page = f.get(url, browser=bool(site.get("browser")))
         cards = extract.card_links(page.html, page.url, site["espandi"], 3) if page.ok and site.get("espandi") else []
-        for card in cards:  # comparatore con risultati raggruppati: le offerte sono dentro la scheda; una può non aprirsi
+        for card in cards:  # comparison site with grouped results: the offers are inside the product page; one may fail to open
             page = f.get(card, browser=bool(site.get("browser")))
             if page.ok:
                 break
@@ -27,7 +27,7 @@ def test_site(site: dict, query: str = "samsung ssd", fetcher: Fetcher | None = 
     if not page.ok:
         return {"esito": "errore", "dettaglio": (page.error or f"HTTP {page.status}")[:120], "letti": 0, "pertinenti": 0}
     items, method = extract.listing_items(page.html, page.url, site.get("selettori"), site.get("negozio", ""), catalog.site_currency(site, home))
-    # basta una parola del termine: i comparatori accorciano spesso i titoli
+    # one word of the term is enough: comparison sites often shorten titles
     relevant = [i for i in items if any(matches_phrase(w, norm(i.title)) for w in query.split())]
     return {"esito": "ok" if relevant else "vuoto", "dettaglio": method, "letti": len(items), "pertinenti": len(relevant),
             "esempio": relevant[0].title[:90] if relevant else "", "prezzo": relevant[0].prices[0] if relevant else None}

@@ -1,18 +1,18 @@
-"""Distingue l'offerta più affidabile dal semplice prezzo più basso."""
+"""Tells the most reliable offer apart from the merely lowest price."""
 from __future__ import annotations
 
 from collections import defaultdict
 
 from .i18n import money, t
 
-ANOMALY_RATIO = 0.6  # sotto il 60% del quartile basso delle offerte simili il prezzo è sospetto
+ANOMALY_RATIO = 0.6  # below 60% of the lower quartile of similar offers the price is suspicious
 ANOMALY_MIN_OTHERS = 3
-LEVEL_ORDER = {"esatto": 0, "superiore": 0, "simile": 1, "incerto": 2}  # esatto e superiore vanno bene uguale: decide il prezzo
-MEDIUM_FROM, LOW_FROM = 1, 4  # punti di rischio
+LEVEL_ORDER = {"esatto": 0, "superiore": 0, "simile": 1, "incerto": 2}  # exact and better are equally good: the price decides
+MEDIUM_FROM, LOW_FROM = 1, 4  # risk points
 
 
 def low_quartile(values: list[float]) -> float:
-    """Un quarto delle offerte costa meno di così. La mediana si alza con kit, bundle e negozi lontani; questo no."""
+    """A quarter of the offers cost less than this. The median rises with kits, bundles and distant shops; this does not."""
     return sorted(values)[len(values) // 4]
 
 
@@ -33,7 +33,7 @@ def grade(o: dict) -> str:
 
 
 def assess(offers: list[dict], cfg: dict) -> list[dict]:
-    """Segna negozi da verificare e prezzi anomali. Si può richiamare più volte sulle stesse offerte."""
+    """Flags shops to verify and unusual prices. Can be called several times on the same offers."""
     shops = [s.lower() for s in (cfg.get("generale", {}).get("negozi_da_verificare") or [])]
     groups, same_code = defaultdict(list), defaultdict(list)
     for o in offers:
@@ -52,7 +52,7 @@ def assess(offers: list[dict], cfg: dict) -> list[dict]:
             text = t(cfg, "w.shop")
             if text not in warns:
                 warns.append(text)
-        # il confronto più giusto è con lo stesso identico modello; senza abbastanza offerte, con la stessa categoria
+        # the fairest comparison is with the identical model; without enough offers, with the same category
         others = list(twins if len(twins) > ANOMALY_MIN_OTHERS else groups[(o["component"], o.get("level"))])
         others.remove(o["total"])
         if len(others) >= ANOMALY_MIN_OTHERS and o["total"] < ANOMALY_RATIO * low_quartile(others):
@@ -70,7 +70,7 @@ def _rank(o: dict) -> tuple:
 
 
 def pick(offers: list[dict]) -> dict | None:
-    """Senza dubbi, esatto o superiore, senza dogana, con le specifiche lette: tra questi il meno caro, anche se è all'estero."""
+    """No doubts, exact or better, no customs, specifications read: the cheapest of these, even if abroad."""
     return min(offers, key=_rank) if offers else None
 
 

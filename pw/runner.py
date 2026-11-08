@@ -1,4 +1,4 @@
-"""Esegue un giro completo: scarica i siti, filtra con le regole, salva, notifica."""
+"""Performs a complete run: downloads the sites, filters with the rules, saves, notifies."""
 from __future__ import annotations
 
 import re
@@ -15,9 +15,9 @@ from .fetch import Fetcher, Page
 from .i18n import money, original_price, t
 from .rules import GENERIC_WORDS, Rules, model_code, norm, split_name
 
-MAX_FAILURES = 2  # dopo due blocchi o errori di fila, il sito si ferma fino al giro successivo
-MAX_CARDS = 5      # schede raggruppate da aprire per ogni ricerca su un comparatore
-MISREAD_RATIO = 0.15  # sotto il 15% della mediana non è un'offerta ma un numero letto male (una rata, un voto, 0,19)
+MAX_FAILURES = 2  # after two blocks or errors in a row, the site stops until the next run
+MAX_CARDS = 5      # grouped product pages to open for each search on a comparison site
+MISREAD_RATIO = 0.15  # below 15% of the median it is not an offer but a misread number (an instalment, a rating, 0.19)
 MISREAD_MIN_OFFERS = 5
 
 
@@ -32,7 +32,7 @@ class Task:
     shop: str = ""
     browser: bool = False
     foreign: bool = False
-    currency: str = "EUR"  # quella in cui il sito scrive i prezzi
+    currency: str = "EUR"  # the one in which the site writes its prices
     handle: str = ""
     days: int = 7
     expand: str = ""
@@ -51,18 +51,18 @@ class TaskResult:
 
 def _without_generic(term: str) -> str:
     words = [w for w in term.split() if w.lower() not in GENERIC_WORDS]
-    # "5070ti" si cerca come lo scrivono i negozi; "9900X" no: la lettera sola fa parte del modello
+    # "5070ti" is searched as shops write it; "9900X" is not: the single letter is part of the model
     return re.sub(r"\b(\d{3,})([a-zA-Z]{2})\b", r"\1 \2", " ".join(words) or term)
 
 
 def search_terms(product: dict) -> list[str]:
-    # il termine uguale al nome è quello automatico: "ram" o "kit" nella ricerca fanno solo perdere risultati
+    # a term equal to the name is the automatic one: "ram" or "kit" in the search only lose results
     terms = [_without_generic(q) if q == product.get("nome") else q for q in (product.get("ricerca") or [product.get("nome", "")])]
     return [q for q in dict.fromkeys(terms) if q.strip()]
 
 
 def build_tasks(cfg: dict, only_product: str | None = None, table: dict | None = None) -> tuple[list[Task], dict[str, str]]:
-    """Ritorna le richieste da fare e i siti saltati col motivo."""
+    """Returns the requests to make and the skipped sites with the reason."""
     tasks, skipped = [], {}
     g = cfg.get("generale", {})
     home, currency = g.get("paese", "IT"), g.get("valuta", "EUR")
@@ -73,7 +73,7 @@ def build_tasks(cfg: dict, only_product: str | None = None, table: dict | None =
         if s.get("browser") and not Fetcher.browser_available():
             skipped[s["id"]] = "browser"
         elif rates.factor(table, catalog.site_currency(s, currency), currency) is None:
-            skipped[s["id"]] = "currency"  # senza cambio i prezzi non sarebbero confrontabili
+            skipped[s["id"]] = "currency"  # without a rate the prices could not be compared
         else:
             usable.append(s)
     for p in products:
@@ -122,7 +122,7 @@ def run_task(f: Fetcher, t_: Task, cfg: dict | None = None) -> TaskResult:
         cards = extract.card_links(p.html, p.url, t_.expand, MAX_CARDS) if t_.expand else []
         if not cards:
             res.items, res.strategy = extract.listing_items(p.html, p.url, t_.sel, t_.shop, t_.currency)
-        for url in cards:  # il prezzo della scheda è un "da...": le offerte vere, con il negozio, sono dentro
+        for url in cards:  # the product page price is a "from...": the real offers, with the shop, are inside
             q = f.get(url, browser=t_.browser)
             res.pages.append(q)
             if q.ok:
@@ -146,7 +146,7 @@ def execute(cfg: dict, tasks: list[Task], log=print) -> list[TaskResult]:
                 out.append(TaskResult(t_, skipped=True))
                 continue
             r = run_task(f, t_, cfg)
-            p = next((x for x in r.pages if x.ok), r.pages[-1])  # basta una pagina letta: il sito risponde
+            p = next((x for x in r.pages if x.ok), r.pages[-1])  # one page read is enough: the site responds
             failures = 0 if p.ok else failures + 1
             state = "ok" if p.ok else ("BLOCKED" if p.blocked else f"error {p.status} {p.error}")
             log(f"  [{t_.source:16}] {(t_.query or t_.handle or t_.url[:40])[:32]:32} -> {state[:70]:10} {len(r.items):3}")
@@ -158,7 +158,7 @@ def execute(cfg: dict, tasks: list[Task], log=print) -> list[TaskResult]:
             with ThreadPoolExecutor(max_workers=min(8, len(by_host))) as ex:
                 for chunk in ex.map(worker, by_host.values()):
                     results += chunk
-        for host_tasks in browser_hosts.values():  # Playwright non è thread-safe: in coda, ma un sito bloccato non ferma gli altri
+        for host_tasks in browser_hosts.values():  # Playwright is not thread-safe: queued, but a blocked site does not stop the others
             results += worker(host_tasks)
     finally:
         f.close()
@@ -192,8 +192,8 @@ def classify_results(cfg: dict, rules: Rules, results: list[TaskResult], table: 
             source_currency = it.currency or r.task.currency
             k = rates.factor(table, source_currency, home)
             if k is None:
-                continue  # prezzo in una valuta di cui non c'è il cambio: non è confrontabile
-            # minimo, massimo e soglia sono nella tua valuta: si converte prima di giudicare
+                continue  # price in a currency with no rate: cannot be compared
+            # minimum, maximum and threshold are in your currency: convert before judging
             d = rules.classify(it.title, [p * k for p in it.prices], None if it.shipping is None else it.shipping * k,
                                None if it.total is None else it.total * k, r.task.product)
             if not d.ok:
@@ -224,7 +224,7 @@ def classify_results(cfg: dict, rules: Rules, results: list[TaskResult], table: 
                            "tags": d.tags, "extra": extra})
     for st in stats.values():
         st["metodi"] = ", ".join(sorted(st["metodi"]))
-    # stesso link trovato da più ricerche: tieni il prezzo più basso
+    # same link found by several searches: keep the lowest price
     best_by_url: dict[tuple, dict] = {}
     for o in offers:
         k = (o["component"], o["url"].split("#")[0])
@@ -261,15 +261,15 @@ def alerts(cfg: dict, rules: Rules, store, run_id: int, offers: list[dict], log=
             why.append(t(cfg, "tg.threshold", price=money(cfg, float(soglia))))
         if ncfg.get("nuovo_minimo", True) and prev is not None and best["total"] < prev * (1 - margin):
             why.append(t(cfg, "tg.new_min", price=money(cfg, prev)))
-        # per un'offerta convertita conta il prezzo del negozio: se si muove solo il cambio, l'avviso non si ripete
+        # for a converted offer the shop's price is what counts: if only the rate moves, the alert is not repeated
         key = f"{cid}|{best['url']}|{round((best.get('extra') or {}).get('prezzo_orig') or best['total'])}"
-        # Avviso non consegnato in un giro precedente: l'offerta ora fa parte dello
-        # storico e non risulterebbe più "nuovo minimo", quindi si riusa il motivo salvato.
+        # Alert not delivered in a previous run: the offer is now part of the
+        # history and would no longer be a "new low", so the saved reason is reused.
         if not why and store.pending_why(key):
             why.append(store.pending_why(key))
         if not why or store.was_notified(key):
             continue
-        # Telegram rifiuta il messaggio se & o < nel testo non sono codificati
+        # Telegram refuses the message if & or < in the text are not encoded
         label = t(cfg, f"level.{best.get('level')}")
         orig = original_price(cfg, best)
         origin = f" ({t(cfg, 'tg.from', orig=escape(orig))})" if orig else ""
