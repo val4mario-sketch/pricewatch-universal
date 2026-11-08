@@ -1,1 +1,1 @@
-"""PriceWatch Universale."""
+"""PriceWatch Universal."""

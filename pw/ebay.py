@@ -72,7 +72,7 @@ def search(cfg: dict, query: str, market: str, limit: int = 50, timeout: float =
         return Page(url, 200, "", via="ebay-api"), [i for i in items if i and i.title]
     except requests.HTTPError as e:
         code = e.response.status_code if e.response is not None else 0
-        hint = "chiave rifiutata" if code in (400, 401) else f"HTTP {code}"
+        hint = "key rejected" if code in (400, 401) else f"HTTP {code}"
         return Page(url, code, "", error=f"eBay API: {hint}"), []
     except (requests.RequestException, ValueError, KeyError) as e:
         return Page(url, 0, "", error=f"eBay API: {type(e).__name__}"), []
